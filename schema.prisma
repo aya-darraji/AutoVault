@@ -21,3 +21,13 @@ model User {
   createdAt DateTime? @default(now())
   updatedAt DateTime? @default(now())
 }
+
+model Agency {
+  id                String    @id @default(cuid())
+  agencyName        String    @default("")
+  agencyPhoneNumber String    @default("")
+  address           String    @default("")
+  fullName          String    @default("")
+  createdAt         DateTime? @default(now())
+  updatedAt         DateTime? @default(now())
+}

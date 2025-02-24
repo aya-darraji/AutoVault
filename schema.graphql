@@ -126,6 +126,66 @@ input UserCreateInput {
   updatedAt: DateTime
 }
 
+type Agency {
+  id: ID!
+  agencyName: String
+  agencyPhoneNumber: String
+  address: String
+  fullName: String
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+input AgencyWhereUniqueInput {
+  id: ID
+}
+
+input AgencyWhereInput {
+  AND: [AgencyWhereInput!]
+  OR: [AgencyWhereInput!]
+  NOT: [AgencyWhereInput!]
+  id: IDFilter
+  agencyName: StringFilter
+  agencyPhoneNumber: StringFilter
+  address: StringFilter
+  fullName: StringFilter
+  createdAt: DateTimeNullableFilter
+  updatedAt: DateTimeNullableFilter
+}
+
+input AgencyOrderByInput {
+  id: OrderDirection
+  agencyName: OrderDirection
+  agencyPhoneNumber: OrderDirection
+  address: OrderDirection
+  fullName: OrderDirection
+  createdAt: OrderDirection
+  updatedAt: OrderDirection
+}
+
+input AgencyUpdateInput {
+  agencyName: String
+  agencyPhoneNumber: String
+  address: String
+  fullName: String
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+input AgencyUpdateArgs {
+  where: AgencyWhereUniqueInput!
+  data: AgencyUpdateInput!
+}
+
+input AgencyCreateInput {
+  agencyName: String
+  agencyPhoneNumber: String
+  address: String
+  fullName: String
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
 """
 The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 """
@@ -138,6 +198,12 @@ type Mutation {
   updateUsers(data: [UserUpdateArgs!]!): [User]
   deleteUser(where: UserWhereUniqueInput!): User
   deleteUsers(where: [UserWhereUniqueInput!]!): [User]
+  createAgency(data: AgencyCreateInput!): Agency
+  createAgencies(data: [AgencyCreateInput!]!): [Agency]
+  updateAgency(where: AgencyWhereUniqueInput!, data: AgencyUpdateInput!): Agency
+  updateAgencies(data: [AgencyUpdateArgs!]!): [Agency]
+  deleteAgency(where: AgencyWhereUniqueInput!): Agency
+  deleteAgencies(where: [AgencyWhereUniqueInput!]!): [Agency]
   endSession: Boolean!
   authenticateUserWithPassword(email: String!, password: String!): UserAuthenticationWithPasswordResult
   createInitialUser(data: CreateInitialUserInput!): UserAuthenticationWithPasswordSuccess!
@@ -164,6 +230,9 @@ type Query {
   user(where: UserWhereUniqueInput!): User
   users(where: UserWhereInput! = {}, orderBy: [UserOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserWhereUniqueInput): [User!]
   usersCount(where: UserWhereInput! = {}): Int
+  agency(where: AgencyWhereUniqueInput!): Agency
+  agencies(where: AgencyWhereInput! = {}, orderBy: [AgencyOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AgencyWhereUniqueInput): [Agency!]
+  agenciesCount(where: AgencyWhereInput! = {}): Int
   keystone: KeystoneMeta!
   authenticatedItem: AuthenticatedItem
 }

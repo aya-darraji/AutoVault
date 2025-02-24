@@ -11,10 +11,12 @@ import {
 import { document } from '@keystone-6/fields-document'
 import { type Lists } from '.keystone/types'
 import { Users } from './models/users'
+import { Agencies } from './models/agency'
 
 export const lists = {
 
-  User: Users
-  
+  User: Users,
+  Agency: Agencies
+
 
 } satisfies Lists
