@@ -12,22 +12,154 @@ generator client {
 }
 
 model User {
+  id                              String                 @id @default(cuid())
+  fullName                        String                 @default("")
+  email                           String                 @unique @default("")
+  password                        String
+  phone                           String                 @default("")
+  address                         String                 @default("")
+  createdAt                       DateTime?              @default(now())
+  updatedAt                       DateTime?              @default(now())
+  from_carListingManagement_owner carListingManagement[] @relation("carListingManagement_owner")
+  from_reviews_user               reviews[]              @relation("reviews_user")
+}
+
+model Agency {
+  id                            String              @id @default(cuid())
+  agencyName                    String              @default("")
+  agencyPhoneNumber             String              @default("")
+  address                       String              @default("")
+  fullName                      String              @default("")
+  createdAt                     DateTime?           @default(now())
+  updatedAt                     DateTime?           @default(now())
+  from_carScanStatistics_agency carScanStatistics[] @relation("carScanStatistics_agency")
+  from_carPurchases_agency      carPurchases[]      @relation("carPurchases_agency")
+}
+
+model carListingManagement {
+  id               String    @id @default(cuid())
+  modelName        String    @default("")
+  carBrand         String    @default("")
+  mileage          Int
+  year             Int
+  series           String    @default("")
+  color            String    @default("")
+  category         String
+  price            Int
+  createdAt        DateTime? @default(now())
+  updatedAt        DateTime? @default(now())
+  owner            User?     @relation("carListingManagement_owner", fields: [ownerId], references: [id])
+  ownerId          String?   @map("owner")
+  from_reviews_car reviews[] @relation("reviews_car")
+
+  @@index([ownerId])
+}
+
+model invoiceManagement {
+  id                     String    @id @default(cuid())
+  availability           String    @default("")
+  bodywork               String    @default("")
+  warranty               String    @default("")
+  numberOfSeats          Int
+  numberOfDoors          Int
+  gearbox                String    @default("")
+  numberOfGears          Int
+  transmission           String    @default("")
+  acceleration           Float?
+  maxSpeed               Int?
+  electricRange          Int?
+  safetyEquipment        String?
+  exteriorEquipment      String?
+  interiorEquipment      String?
+  numberOfElectricMotors Int?
+  energy                 String    @default("")
+  taxHorsepower          Int?
+  powerDIN               Int?
+  battery                String    @default("")
+  torque                 Int?
+  length                 Float?
+  width                  Float?
+  height                 Float?
+  trunkVolume            Float?
+  electricConsumption    Float?
+  normalChargeTime       Float?
+  fastChargeTime         Float?
+  drivingAssistance      String?
+  audioCommunication     String?
+  functionalEquipment    String?
+  createdAt              DateTime? @default(now())
+  updatedAt              DateTime? @default(now())
+}
+
+model searchFiltering {
+  id        String    @id @default(cuid())
+  make      String    @default("")
+  model     String    @default("")
+  year      Int
+  price     Float
+  bodywork  String?
+  gearbox   String?
+  fuelType  String?
+  mileage   Int?
+  color     String    @default("")
+  doors     Int?
+  seats     Int?
+  createdAt DateTime? @default(now())
+  updatedAt DateTime? @default(now())
+}
+
+model authentication {
   id        String    @id @default(cuid())
   fullName  String    @default("")
   email     String    @unique @default("")
   password  String
+  role      String    @default("user")
   phone     String    @default("")
   address   String    @default("")
   createdAt DateTime? @default(now())
   updatedAt DateTime? @default(now())
 }
 
-model Agency {
-  id                String    @id @default(cuid())
-  agencyName        String    @default("")
-  agencyPhoneNumber String    @default("")
-  address           String    @default("")
-  fullName          String    @default("")
-  createdAt         DateTime? @default(now())
-  updatedAt         DateTime? @default(now())
+model reviews {
+  id         String                @id @default(cuid())
+  rating     Int
+  reviewText String                @default("")
+  user       User?                 @relation("reviews_user", fields: [userId], references: [id])
+  userId     String?               @map("user")
+  car        carListingManagement? @relation("reviews_car", fields: [carId], references: [id])
+  carId      String?               @map("car")
+  createdAt  DateTime?             @default(now())
+  updatedAt  DateTime?             @default(now())
+
+  @@index([userId])
+  @@index([carId])
+}
+
+model agencyStatistics {
+  id         String    @id @default(cuid())
+  agencyName String    @default("")
+  viewCount  Int?      @default(0)
+  lastSeen   DateTime? @default(now())
+}
+
+model carScanStatistics {
+  id          String    @id @default(cuid())
+  agency      Agency?   @relation("carScanStatistics_agency", fields: [agencyId], references: [id])
+  agencyId    String?   @map("agency")
+  carName     String    @default("")
+  scanCount   Int?      @default(0)
+  lastScanned DateTime? @default(now())
+
+  @@index([agencyId])
+}
+
+model carPurchases {
+  id            String    @id @default(cuid())
+  agency        Agency?   @relation("carPurchases_agency", fields: [agencyId], references: [id])
+  agencyId      String?   @map("agency")
+  carName       String    @default("")
+  purchaseCount Int?      @default(0)
+  lastPurchase  DateTime? @default(now())
+
+  @@index([agencyId])
 }

@@ -14,5 +14,6 @@ export default withAuth(
     },
     lists,
     session,
+  
   })
 )
