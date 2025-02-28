@@ -11,6 +11,12 @@
     "@keystone-6/auth": "^8.0.0",
     "@keystone-6/core": "^6.0.0",
     "@keystone-6/fields-document": "^9.0.0",
-    "typescript": "^5.5.0"
+    "typescript": "^5.5.0",
+    "react-icons": "^4.10.1",
+    "@chakra-ui/icons": "^2.1.0",
+    "@chakra-ui/react": "^2.8.0",
+    "framer-motion": "^10.15.2",
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0"
   }
 }

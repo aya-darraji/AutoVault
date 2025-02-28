@@ -128,12 +128,39 @@ input UserCreateInput {
 
 type Agency {
   id: ID!
-  agencyName: String
+  agencyFullName: String
+  agencyAvatar: ImageFieldOutput
   agencyPhoneNumber: String
-  address: String
-  fullName: String
+  agencyAddress: String
+  agencyTaxNumber: String
+  agencyCompanyType: AgencyAgencyCompanyTypeType
+  cars(where: CarWhereInput! = {}, orderBy: [CarOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CarWhereUniqueInput): [Car!]
+  carsCount(where: CarWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
+}
+
+type ImageFieldOutput {
+  id: ID!
+  filesize: Int!
+  width: Int!
+  height: Int!
+  extension: ImageExtension!
+  url: String!
+}
+
+enum ImageExtension {
+  jpg
+  png
+  webp
+  gif
+}
+
+enum AgencyAgencyCompanyTypeType {
+  SARL
+  SUARL
+  SA
+  Other
 }
 
 input AgencyWhereUniqueInput {
@@ -145,31 +172,64 @@ input AgencyWhereInput {
   OR: [AgencyWhereInput!]
   NOT: [AgencyWhereInput!]
   id: IDFilter
-  agencyName: StringFilter
+  agencyFullName: StringFilter
   agencyPhoneNumber: StringFilter
-  address: StringFilter
-  fullName: StringFilter
+  agencyAddress: StringFilter
+  agencyTaxNumber: StringFilter
+  agencyCompanyType: AgencyAgencyCompanyTypeTypeNullableFilter
+  cars: CarManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
 }
 
+input AgencyAgencyCompanyTypeTypeNullableFilter {
+  equals: AgencyAgencyCompanyTypeType
+  in: [AgencyAgencyCompanyTypeType!]
+  notIn: [AgencyAgencyCompanyTypeType!]
+  not: AgencyAgencyCompanyTypeTypeNullableFilter
+}
+
+input CarManyRelationFilter {
+  every: CarWhereInput
+  some: CarWhereInput
+  none: CarWhereInput
+}
+
 input AgencyOrderByInput {
   id: OrderDirection
-  agencyName: OrderDirection
+  agencyFullName: OrderDirection
   agencyPhoneNumber: OrderDirection
-  address: OrderDirection
-  fullName: OrderDirection
+  agencyAddress: OrderDirection
+  agencyTaxNumber: OrderDirection
+  agencyCompanyType: OrderDirection
   createdAt: OrderDirection
   updatedAt: OrderDirection
 }
 
 input AgencyUpdateInput {
-  agencyName: String
+  agencyFullName: String
+  agencyAvatar: ImageFieldInput
   agencyPhoneNumber: String
-  address: String
-  fullName: String
+  agencyAddress: String
+  agencyTaxNumber: String
+  agencyCompanyType: AgencyAgencyCompanyTypeType
+  cars: CarRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
+}
+
+input ImageFieldInput {
+  upload: Upload!
+}
+
+"""The `Upload` scalar type represents a file upload."""
+scalar Upload
+
+input CarRelateToManyForUpdateInput {
+  disconnect: [CarWhereUniqueInput!]
+  set: [CarWhereUniqueInput!]
+  create: [CarCreateInput!]
+  connect: [CarWhereUniqueInput!]
 }
 
 input AgencyUpdateArgs {
@@ -178,12 +238,501 @@ input AgencyUpdateArgs {
 }
 
 input AgencyCreateInput {
-  agencyName: String
+  agencyFullName: String
+  agencyAvatar: ImageFieldInput
   agencyPhoneNumber: String
-  address: String
-  fullName: String
+  agencyAddress: String
+  agencyTaxNumber: String
+  agencyCompanyType: AgencyAgencyCompanyTypeType
+  cars: CarRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
+}
+
+input CarRelateToManyForCreateInput {
+  create: [CarCreateInput!]
+  connect: [CarWhereUniqueInput!]
+}
+
+type Car {
+  id: ID!
+  name: String
+  model: String
+  year: Int
+  price: Int
+  color: String
+  bodyType: String
+  engineType: String
+  horsepower: Int
+  torque: Int
+  topSpeed: Int
+  acceleration: String
+  transmission: String
+  drivetrain: String
+  fuelCapacity: Float
+  fuelEconomyCity: Float
+  fuelEconomyHighway: Float
+  fuelEconomyCombined: Float
+  emissionsRating: String
+  airbags: Int
+  abs: Boolean
+  tractionControl: Boolean
+  laneAssist: Boolean
+  adaptiveCruiseControl: Boolean
+  blindSpotMonitor: Boolean
+  rearViewCamera: Boolean
+  parkingSensors: Boolean
+  autonomousDrivingLevel: String
+  seats: Int
+  seatMaterial: String
+  heatedSeats: Boolean
+  ventilatedSeats: Boolean
+  sunroof: Boolean
+  climateControl: String
+  infotainmentSystem: String
+  touchscreenSize: Float
+  wirelessCharging: Boolean
+  appleCarPlay: Boolean
+  androidAuto: Boolean
+  wheels: String
+  wheelSize: Float
+  ledHeadlights: Boolean
+  fogLights: Boolean
+  tintedWindows: Boolean
+  cargoCapacity: Float
+  towingCapacity: Float
+  roofRack: Boolean
+  trailerHitch: Boolean
+  bluetooth: Boolean
+  wifiHotspot: Boolean
+  usbPorts: Int
+  speakerSystem: String
+  agency(where: AgencyWhereInput! = {}, orderBy: [AgencyOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AgencyWhereUniqueInput): [Agency!]
+  agencyCount(where: AgencyWhereInput! = {}): Int
+  status: String
+  listedDate: DateTime
+  warrantyYears: Int
+  images: ImageFieldOutput
+  videoURL: String
+  insuranceStatus: String
+  registrationValidUntil: DateTime
+}
+
+input CarWhereUniqueInput {
+  id: ID
+}
+
+input CarWhereInput {
+  AND: [CarWhereInput!]
+  OR: [CarWhereInput!]
+  NOT: [CarWhereInput!]
+  id: IDFilter
+  name: StringFilter
+  model: StringFilter
+  year: IntFilter
+  price: IntFilter
+  color: StringNullableFilter
+  bodyType: StringNullableFilter
+  engineType: StringNullableFilter
+  horsepower: IntNullableFilter
+  torque: IntNullableFilter
+  topSpeed: IntNullableFilter
+  acceleration: StringFilter
+  transmission: StringNullableFilter
+  drivetrain: StringNullableFilter
+  fuelCapacity: FloatNullableFilter
+  fuelEconomyCity: FloatNullableFilter
+  fuelEconomyHighway: FloatNullableFilter
+  fuelEconomyCombined: FloatNullableFilter
+  emissionsRating: StringFilter
+  airbags: IntNullableFilter
+  abs: BooleanFilter
+  tractionControl: BooleanFilter
+  laneAssist: BooleanFilter
+  adaptiveCruiseControl: BooleanFilter
+  blindSpotMonitor: BooleanFilter
+  rearViewCamera: BooleanFilter
+  parkingSensors: BooleanFilter
+  autonomousDrivingLevel: StringNullableFilter
+  seats: IntNullableFilter
+  seatMaterial: StringNullableFilter
+  heatedSeats: BooleanFilter
+  ventilatedSeats: BooleanFilter
+  sunroof: BooleanFilter
+  climateControl: StringNullableFilter
+  infotainmentSystem: StringFilter
+  touchscreenSize: FloatNullableFilter
+  wirelessCharging: BooleanFilter
+  appleCarPlay: BooleanFilter
+  androidAuto: BooleanFilter
+  wheels: StringNullableFilter
+  wheelSize: FloatNullableFilter
+  ledHeadlights: BooleanFilter
+  fogLights: BooleanFilter
+  tintedWindows: BooleanFilter
+  cargoCapacity: FloatNullableFilter
+  towingCapacity: FloatNullableFilter
+  roofRack: BooleanFilter
+  trailerHitch: BooleanFilter
+  bluetooth: BooleanFilter
+  wifiHotspot: BooleanFilter
+  usbPorts: IntNullableFilter
+  speakerSystem: StringFilter
+  agency: AgencyManyRelationFilter
+  status: StringNullableFilter
+  listedDate: DateTimeNullableFilter
+  warrantyYears: IntNullableFilter
+  videoURL: StringFilter
+  insuranceStatus: StringNullableFilter
+  registrationValidUntil: DateTimeNullableFilter
+}
+
+input IntFilter {
+  equals: Int
+  in: [Int!]
+  notIn: [Int!]
+  lt: Int
+  lte: Int
+  gt: Int
+  gte: Int
+  not: IntFilter
+}
+
+input StringNullableFilter {
+  equals: String
+  in: [String!]
+  notIn: [String!]
+  lt: String
+  lte: String
+  gt: String
+  gte: String
+  contains: String
+  startsWith: String
+  endsWith: String
+  not: StringNullableFilter
+}
+
+input IntNullableFilter {
+  equals: Int
+  in: [Int!]
+  notIn: [Int!]
+  lt: Int
+  lte: Int
+  gt: Int
+  gte: Int
+  not: IntNullableFilter
+}
+
+input FloatNullableFilter {
+  equals: Float
+  in: [Float!]
+  notIn: [Float!]
+  lt: Float
+  lte: Float
+  gt: Float
+  gte: Float
+  not: FloatNullableFilter
+}
+
+input BooleanFilter {
+  equals: Boolean
+  not: BooleanFilter
+}
+
+input AgencyManyRelationFilter {
+  every: AgencyWhereInput
+  some: AgencyWhereInput
+  none: AgencyWhereInput
+}
+
+input CarOrderByInput {
+  id: OrderDirection
+  name: OrderDirection
+  model: OrderDirection
+  year: OrderDirection
+  price: OrderDirection
+  color: OrderDirection
+  bodyType: OrderDirection
+  engineType: OrderDirection
+  horsepower: OrderDirection
+  torque: OrderDirection
+  topSpeed: OrderDirection
+  acceleration: OrderDirection
+  transmission: OrderDirection
+  drivetrain: OrderDirection
+  fuelCapacity: OrderDirection
+  fuelEconomyCity: OrderDirection
+  fuelEconomyHighway: OrderDirection
+  fuelEconomyCombined: OrderDirection
+  emissionsRating: OrderDirection
+  airbags: OrderDirection
+  abs: OrderDirection
+  tractionControl: OrderDirection
+  laneAssist: OrderDirection
+  adaptiveCruiseControl: OrderDirection
+  blindSpotMonitor: OrderDirection
+  rearViewCamera: OrderDirection
+  parkingSensors: OrderDirection
+  autonomousDrivingLevel: OrderDirection
+  seats: OrderDirection
+  seatMaterial: OrderDirection
+  heatedSeats: OrderDirection
+  ventilatedSeats: OrderDirection
+  sunroof: OrderDirection
+  climateControl: OrderDirection
+  infotainmentSystem: OrderDirection
+  touchscreenSize: OrderDirection
+  wirelessCharging: OrderDirection
+  appleCarPlay: OrderDirection
+  androidAuto: OrderDirection
+  wheels: OrderDirection
+  wheelSize: OrderDirection
+  ledHeadlights: OrderDirection
+  fogLights: OrderDirection
+  tintedWindows: OrderDirection
+  cargoCapacity: OrderDirection
+  towingCapacity: OrderDirection
+  roofRack: OrderDirection
+  trailerHitch: OrderDirection
+  bluetooth: OrderDirection
+  wifiHotspot: OrderDirection
+  usbPorts: OrderDirection
+  speakerSystem: OrderDirection
+  status: OrderDirection
+  listedDate: OrderDirection
+  warrantyYears: OrderDirection
+  videoURL: OrderDirection
+  insuranceStatus: OrderDirection
+  registrationValidUntil: OrderDirection
+}
+
+input CarUpdateInput {
+  name: String
+  model: String
+  year: Int
+  price: Int
+  color: String
+  bodyType: String
+  engineType: String
+  horsepower: Int
+  torque: Int
+  topSpeed: Int
+  acceleration: String
+  transmission: String
+  drivetrain: String
+  fuelCapacity: Float
+  fuelEconomyCity: Float
+  fuelEconomyHighway: Float
+  fuelEconomyCombined: Float
+  emissionsRating: String
+  airbags: Int
+  abs: Boolean
+  tractionControl: Boolean
+  laneAssist: Boolean
+  adaptiveCruiseControl: Boolean
+  blindSpotMonitor: Boolean
+  rearViewCamera: Boolean
+  parkingSensors: Boolean
+  autonomousDrivingLevel: String
+  seats: Int
+  seatMaterial: String
+  heatedSeats: Boolean
+  ventilatedSeats: Boolean
+  sunroof: Boolean
+  climateControl: String
+  infotainmentSystem: String
+  touchscreenSize: Float
+  wirelessCharging: Boolean
+  appleCarPlay: Boolean
+  androidAuto: Boolean
+  wheels: String
+  wheelSize: Float
+  ledHeadlights: Boolean
+  fogLights: Boolean
+  tintedWindows: Boolean
+  cargoCapacity: Float
+  towingCapacity: Float
+  roofRack: Boolean
+  trailerHitch: Boolean
+  bluetooth: Boolean
+  wifiHotspot: Boolean
+  usbPorts: Int
+  speakerSystem: String
+  agency: AgencyRelateToManyForUpdateInput
+  status: String
+  listedDate: DateTime
+  warrantyYears: Int
+  images: ImageFieldInput
+  videoURL: String
+  insuranceStatus: String
+  registrationValidUntil: DateTime
+}
+
+input AgencyRelateToManyForUpdateInput {
+  disconnect: [AgencyWhereUniqueInput!]
+  set: [AgencyWhereUniqueInput!]
+  create: [AgencyCreateInput!]
+  connect: [AgencyWhereUniqueInput!]
+}
+
+input CarUpdateArgs {
+  where: CarWhereUniqueInput!
+  data: CarUpdateInput!
+}
+
+input CarCreateInput {
+  name: String
+  model: String
+  year: Int
+  price: Int
+  color: String
+  bodyType: String
+  engineType: String
+  horsepower: Int
+  torque: Int
+  topSpeed: Int
+  acceleration: String
+  transmission: String
+  drivetrain: String
+  fuelCapacity: Float
+  fuelEconomyCity: Float
+  fuelEconomyHighway: Float
+  fuelEconomyCombined: Float
+  emissionsRating: String
+  airbags: Int
+  abs: Boolean
+  tractionControl: Boolean
+  laneAssist: Boolean
+  adaptiveCruiseControl: Boolean
+  blindSpotMonitor: Boolean
+  rearViewCamera: Boolean
+  parkingSensors: Boolean
+  autonomousDrivingLevel: String
+  seats: Int
+  seatMaterial: String
+  heatedSeats: Boolean
+  ventilatedSeats: Boolean
+  sunroof: Boolean
+  climateControl: String
+  infotainmentSystem: String
+  touchscreenSize: Float
+  wirelessCharging: Boolean
+  appleCarPlay: Boolean
+  androidAuto: Boolean
+  wheels: String
+  wheelSize: Float
+  ledHeadlights: Boolean
+  fogLights: Boolean
+  tintedWindows: Boolean
+  cargoCapacity: Float
+  towingCapacity: Float
+  roofRack: Boolean
+  trailerHitch: Boolean
+  bluetooth: Boolean
+  wifiHotspot: Boolean
+  usbPorts: Int
+  speakerSystem: String
+  agency: AgencyRelateToManyForCreateInput
+  status: String
+  listedDate: DateTime
+  warrantyYears: Int
+  images: ImageFieldInput
+  videoURL: String
+  insuranceStatus: String
+  registrationValidUntil: DateTime
+}
+
+input AgencyRelateToManyForCreateInput {
+  create: [AgencyCreateInput!]
+  connect: [AgencyWhereUniqueInput!]
+}
+
+type Invoice {
+  id: ID!
+  orderId: String
+  taxOnValue: String
+  BaseTaxValue: String
+  NetValue: String
+  status: Boolean
+  agency(where: AgencyWhereInput! = {}, orderBy: [AgencyOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AgencyWhereUniqueInput): [Agency!]
+  agencyCount(where: AgencyWhereInput! = {}): Int
+  user(where: UserWhereInput! = {}, orderBy: [UserOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserWhereUniqueInput): [User!]
+  userCount(where: UserWhereInput! = {}): Int
+  car(where: CarWhereInput! = {}, orderBy: [CarOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CarWhereUniqueInput): [Car!]
+  carCount(where: CarWhereInput! = {}): Int
+}
+
+input InvoiceWhereUniqueInput {
+  id: ID
+}
+
+input InvoiceWhereInput {
+  AND: [InvoiceWhereInput!]
+  OR: [InvoiceWhereInput!]
+  NOT: [InvoiceWhereInput!]
+  id: IDFilter
+  orderId: StringFilter
+  taxOnValue: StringFilter
+  BaseTaxValue: StringFilter
+  NetValue: StringFilter
+  status: BooleanFilter
+  agency: AgencyManyRelationFilter
+  user: UserManyRelationFilter
+  car: CarManyRelationFilter
+}
+
+input UserManyRelationFilter {
+  every: UserWhereInput
+  some: UserWhereInput
+  none: UserWhereInput
+}
+
+input InvoiceOrderByInput {
+  id: OrderDirection
+  orderId: OrderDirection
+  taxOnValue: OrderDirection
+  BaseTaxValue: OrderDirection
+  NetValue: OrderDirection
+  status: OrderDirection
+}
+
+input InvoiceUpdateInput {
+  orderId: String
+  taxOnValue: String
+  BaseTaxValue: String
+  NetValue: String
+  status: Boolean
+  agency: AgencyRelateToManyForUpdateInput
+  user: UserRelateToManyForUpdateInput
+  car: CarRelateToManyForUpdateInput
+}
+
+input UserRelateToManyForUpdateInput {
+  disconnect: [UserWhereUniqueInput!]
+  set: [UserWhereUniqueInput!]
+  create: [UserCreateInput!]
+  connect: [UserWhereUniqueInput!]
+}
+
+input InvoiceUpdateArgs {
+  where: InvoiceWhereUniqueInput!
+  data: InvoiceUpdateInput!
+}
+
+input InvoiceCreateInput {
+  orderId: String
+  taxOnValue: String
+  BaseTaxValue: String
+  NetValue: String
+  status: Boolean
+  agency: AgencyRelateToManyForCreateInput
+  user: UserRelateToManyForCreateInput
+  car: CarRelateToManyForCreateInput
+}
+
+input UserRelateToManyForCreateInput {
+  create: [UserCreateInput!]
+  connect: [UserWhereUniqueInput!]
 }
 
 """
@@ -204,6 +753,18 @@ type Mutation {
   updateAgencies(data: [AgencyUpdateArgs!]!): [Agency]
   deleteAgency(where: AgencyWhereUniqueInput!): Agency
   deleteAgencies(where: [AgencyWhereUniqueInput!]!): [Agency]
+  createCar(data: CarCreateInput!): Car
+  createCars(data: [CarCreateInput!]!): [Car]
+  updateCar(where: CarWhereUniqueInput!, data: CarUpdateInput!): Car
+  updateCars(data: [CarUpdateArgs!]!): [Car]
+  deleteCar(where: CarWhereUniqueInput!): Car
+  deleteCars(where: [CarWhereUniqueInput!]!): [Car]
+  createInvoice(data: InvoiceCreateInput!): Invoice
+  createInvoices(data: [InvoiceCreateInput!]!): [Invoice]
+  updateInvoice(where: InvoiceWhereUniqueInput!, data: InvoiceUpdateInput!): Invoice
+  updateInvoices(data: [InvoiceUpdateArgs!]!): [Invoice]
+  deleteInvoice(where: InvoiceWhereUniqueInput!): Invoice
+  deleteInvoices(where: [InvoiceWhereUniqueInput!]!): [Invoice]
   endSession: Boolean!
   authenticateUserWithPassword(email: String!, password: String!): UserAuthenticationWithPasswordResult
   createInitialUser(data: CreateInitialUserInput!): UserAuthenticationWithPasswordSuccess!
@@ -233,6 +794,12 @@ type Query {
   agency(where: AgencyWhereUniqueInput!): Agency
   agencies(where: AgencyWhereInput! = {}, orderBy: [AgencyOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AgencyWhereUniqueInput): [Agency!]
   agenciesCount(where: AgencyWhereInput! = {}): Int
+  car(where: CarWhereUniqueInput!): Car
+  cars(where: CarWhereInput! = {}, orderBy: [CarOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CarWhereUniqueInput): [Car!]
+  carsCount(where: CarWhereInput! = {}): Int
+  invoice(where: InvoiceWhereUniqueInput!): Invoice
+  invoices(where: InvoiceWhereInput! = {}, orderBy: [InvoiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: InvoiceWhereUniqueInput): [Invoice!]
+  invoicesCount(where: InvoiceWhereInput! = {}): Int
   keystone: KeystoneMeta!
   authenticatedItem: AuthenticatedItem
 }
@@ -250,24 +817,25 @@ type KeystoneAdminMeta {
 
 type KeystoneAdminUIListMeta {
   key: String!
-  itemQueryName: String!
-  listQueryName: String!
-  hideCreate: Boolean!
-  hideDelete: Boolean!
   path: String!
   label: String!
   singular: String!
   plural: String!
   description: String
-  initialColumns: [String!]!
   pageSize: Int!
   labelField: String!
   fields: [KeystoneAdminUIFieldMeta!]!
   groups: [KeystoneAdminUIFieldGroupMeta!]!
   graphql: KeystoneAdminUIGraphQL!
+  initialColumns: [String!]!
+  initialSearchFields: [String!]!
   initialSort: KeystoneAdminUISort
-  isHidden: Boolean!
   isSingleton: Boolean!
+  hideCreate: Boolean!
+  hideDelete: Boolean!
+  isHidden: Boolean!
+  itemQueryName: String!
+  listQueryName: String!
 }
 
 type KeystoneAdminUIFieldMeta {
