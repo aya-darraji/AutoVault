@@ -5,14 +5,31 @@ import { Agencies } from './models/agency'
 import { Cars } from './models/cars'
 import { Invoices } from './models/invoice'
 import { type ListConfig } from '@keystone-6/core'
-//test
-// test2 
-//test3 
+import { Settings } from './models/settings';  // Mise à jour du fichier*/
+import { ResponsiveConfig } from './models/responsiveConfig';  
+import { ContactInquiry } from './models/contactInquiry';  
+import { ReviewsAndRatings } from './models/reviewsAndRatings';  
+import { Media } from './models/media'; 
+import { CarSpecifications } from './models/carSpecification'; 
+/*import { CarListings  } from './models/carListings'; */
+
+
 export const lists = {
 
   User: Users ,
   Agency: Agencies,
   Car:Cars,
   Invoice:Invoices,
+  settings:Settings,
+  responsiveConfig:ResponsiveConfig,
+  reviewsAndRatings:ReviewsAndRatings,
+  media:Media,
+  carSpecification:CarSpecifications,
+  contactInquiry:ContactInquiry
+  //carListings :CarListings
+
+
+
+
 
 } satisfies Lists

@@ -133,7 +133,7 @@ type Agency {
   agencyPhoneNumber: String
   agencyAddress: String
   agencyTaxNumber: String
-  agencyCompanyType: AgencyAgencyCompanyTypeType
+  agencyCompanyType: String
   cars(where: CarWhereInput! = {}, orderBy: [CarOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CarWhereUniqueInput): [Car!]
   carsCount(where: CarWhereInput! = {}): Int
   createdAt: DateTime
@@ -156,13 +156,6 @@ enum ImageExtension {
   gif
 }
 
-enum AgencyAgencyCompanyTypeType {
-  SARL
-  SUARL
-  SA
-  Other
-}
-
 input AgencyWhereUniqueInput {
   id: ID
 }
@@ -176,17 +169,24 @@ input AgencyWhereInput {
   agencyPhoneNumber: StringFilter
   agencyAddress: StringFilter
   agencyTaxNumber: StringFilter
-  agencyCompanyType: AgencyAgencyCompanyTypeTypeNullableFilter
+  agencyCompanyType: StringNullableFilter
   cars: CarManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
 }
 
-input AgencyAgencyCompanyTypeTypeNullableFilter {
-  equals: AgencyAgencyCompanyTypeType
-  in: [AgencyAgencyCompanyTypeType!]
-  notIn: [AgencyAgencyCompanyTypeType!]
-  not: AgencyAgencyCompanyTypeTypeNullableFilter
+input StringNullableFilter {
+  equals: String
+  in: [String!]
+  notIn: [String!]
+  lt: String
+  lte: String
+  gt: String
+  gte: String
+  contains: String
+  startsWith: String
+  endsWith: String
+  not: StringNullableFilter
 }
 
 input CarManyRelationFilter {
@@ -212,7 +212,7 @@ input AgencyUpdateInput {
   agencyPhoneNumber: String
   agencyAddress: String
   agencyTaxNumber: String
-  agencyCompanyType: AgencyAgencyCompanyTypeType
+  agencyCompanyType: String
   cars: CarRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
@@ -243,7 +243,7 @@ input AgencyCreateInput {
   agencyPhoneNumber: String
   agencyAddress: String
   agencyTaxNumber: String
-  agencyCompanyType: AgencyAgencyCompanyTypeType
+  agencyCompanyType: String
   cars: CarRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
@@ -396,20 +396,6 @@ input IntFilter {
   gt: Int
   gte: Int
   not: IntFilter
-}
-
-input StringNullableFilter {
-  equals: String
-  in: [String!]
-  notIn: [String!]
-  lt: String
-  lte: String
-  gt: String
-  gte: String
-  contains: String
-  startsWith: String
-  endsWith: String
-  not: StringNullableFilter
 }
 
 input IntNullableFilter {
@@ -735,6 +721,527 @@ input UserRelateToManyForCreateInput {
   connect: [UserWhereUniqueInput!]
 }
 
+type settings {
+  id: ID!
+  brand: String
+  bodyType: String
+  engineType: String
+  transmission: String
+  drivetrain: String
+  climateControl: String
+  wheels: String
+  heatedSeats: Boolean
+  ventilatedSeats: Boolean
+  sunroof: Boolean
+  bluetooth: Boolean
+  wifiHotspot: Boolean
+  appleCarPlay: Boolean
+  androidAuto: Boolean
+  airbags: Int
+  warrantyYears: Int
+  fuelCapacity: Float
+}
+
+input settingsWhereUniqueInput {
+  id: ID
+}
+
+input settingsWhereInput {
+  AND: [settingsWhereInput!]
+  OR: [settingsWhereInput!]
+  NOT: [settingsWhereInput!]
+  id: IDFilter
+  brand: StringFilter
+  bodyType: StringNullableFilter
+  engineType: StringNullableFilter
+  transmission: StringNullableFilter
+  drivetrain: StringNullableFilter
+  climateControl: StringNullableFilter
+  wheels: StringNullableFilter
+  heatedSeats: BooleanFilter
+  ventilatedSeats: BooleanFilter
+  sunroof: BooleanFilter
+  bluetooth: BooleanFilter
+  wifiHotspot: BooleanFilter
+  appleCarPlay: BooleanFilter
+  androidAuto: BooleanFilter
+  airbags: IntNullableFilter
+  warrantyYears: IntNullableFilter
+  fuelCapacity: FloatNullableFilter
+}
+
+input settingsOrderByInput {
+  id: OrderDirection
+  brand: OrderDirection
+  bodyType: OrderDirection
+  engineType: OrderDirection
+  transmission: OrderDirection
+  drivetrain: OrderDirection
+  climateControl: OrderDirection
+  wheels: OrderDirection
+  heatedSeats: OrderDirection
+  ventilatedSeats: OrderDirection
+  sunroof: OrderDirection
+  bluetooth: OrderDirection
+  wifiHotspot: OrderDirection
+  appleCarPlay: OrderDirection
+  androidAuto: OrderDirection
+  airbags: OrderDirection
+  warrantyYears: OrderDirection
+  fuelCapacity: OrderDirection
+}
+
+input settingsUpdateInput {
+  brand: String
+  bodyType: String
+  engineType: String
+  transmission: String
+  drivetrain: String
+  climateControl: String
+  wheels: String
+  heatedSeats: Boolean
+  ventilatedSeats: Boolean
+  sunroof: Boolean
+  bluetooth: Boolean
+  wifiHotspot: Boolean
+  appleCarPlay: Boolean
+  androidAuto: Boolean
+  airbags: Int
+  warrantyYears: Int
+  fuelCapacity: Float
+}
+
+input settingsUpdateArgs {
+  where: settingsWhereUniqueInput!
+  data: settingsUpdateInput!
+}
+
+input settingsCreateInput {
+  brand: String
+  bodyType: String
+  engineType: String
+  transmission: String
+  drivetrain: String
+  climateControl: String
+  wheels: String
+  heatedSeats: Boolean
+  ventilatedSeats: Boolean
+  sunroof: Boolean
+  bluetooth: Boolean
+  wifiHotspot: Boolean
+  appleCarPlay: Boolean
+  androidAuto: Boolean
+  airbags: Int
+  warrantyYears: Int
+  fuelCapacity: Float
+}
+
+type responsiveConfig {
+  id: ID!
+  name: String
+  isMobileOptimized: Boolean
+  breakpoints: JSON
+  designFeatures: JSON
+  theme: String
+  createdAt: DateTime
+  updatedAt: DateTime
+  updatedBy: User
+}
+
+input responsiveConfigWhereUniqueInput {
+  id: ID
+  name: String
+}
+
+input responsiveConfigWhereInput {
+  AND: [responsiveConfigWhereInput!]
+  OR: [responsiveConfigWhereInput!]
+  NOT: [responsiveConfigWhereInput!]
+  id: IDFilter
+  name: StringFilter
+  isMobileOptimized: BooleanFilter
+  theme: StringNullableFilter
+  createdAt: DateTimeNullableFilter
+  updatedAt: DateTimeNullableFilter
+  updatedBy: UserWhereInput
+}
+
+input responsiveConfigOrderByInput {
+  id: OrderDirection
+  name: OrderDirection
+  isMobileOptimized: OrderDirection
+  theme: OrderDirection
+  createdAt: OrderDirection
+  updatedAt: OrderDirection
+}
+
+input responsiveConfigUpdateInput {
+  name: String
+  isMobileOptimized: Boolean
+  breakpoints: JSON
+  designFeatures: JSON
+  theme: String
+  createdAt: DateTime
+  updatedAt: DateTime
+  updatedBy: UserRelateToOneForUpdateInput
+}
+
+input UserRelateToOneForUpdateInput {
+  create: UserCreateInput
+  connect: UserWhereUniqueInput
+  disconnect: Boolean
+}
+
+input responsiveConfigUpdateArgs {
+  where: responsiveConfigWhereUniqueInput!
+  data: responsiveConfigUpdateInput!
+}
+
+input responsiveConfigCreateInput {
+  name: String
+  isMobileOptimized: Boolean
+  breakpoints: JSON
+  designFeatures: JSON
+  theme: String
+  createdAt: DateTime
+  updatedAt: DateTime
+  updatedBy: UserRelateToOneForCreateInput
+}
+
+input UserRelateToOneForCreateInput {
+  create: UserCreateInput
+  connect: UserWhereUniqueInput
+}
+
+type reviewsAndRatings {
+  id: ID!
+  reviewTitle: String
+  reviewText: String
+  rating: Int
+  car: Car
+  reviewerName: String
+  reviewerEmail: String
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+input reviewsAndRatingsWhereUniqueInput {
+  id: ID
+}
+
+input reviewsAndRatingsWhereInput {
+  AND: [reviewsAndRatingsWhereInput!]
+  OR: [reviewsAndRatingsWhereInput!]
+  NOT: [reviewsAndRatingsWhereInput!]
+  id: IDFilter
+  reviewTitle: StringFilter
+  reviewText: StringFilter
+  rating: IntFilter
+  car: CarWhereInput
+  reviewerName: StringFilter
+  reviewerEmail: StringFilter
+  createdAt: DateTimeNullableFilter
+  updatedAt: DateTimeNullableFilter
+}
+
+input reviewsAndRatingsOrderByInput {
+  id: OrderDirection
+  reviewTitle: OrderDirection
+  reviewText: OrderDirection
+  rating: OrderDirection
+  reviewerName: OrderDirection
+  reviewerEmail: OrderDirection
+  createdAt: OrderDirection
+  updatedAt: OrderDirection
+}
+
+input reviewsAndRatingsUpdateInput {
+  reviewTitle: String
+  reviewText: String
+  rating: Int
+  car: CarRelateToOneForUpdateInput
+  reviewerName: String
+  reviewerEmail: String
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+input CarRelateToOneForUpdateInput {
+  create: CarCreateInput
+  connect: CarWhereUniqueInput
+  disconnect: Boolean
+}
+
+input reviewsAndRatingsUpdateArgs {
+  where: reviewsAndRatingsWhereUniqueInput!
+  data: reviewsAndRatingsUpdateInput!
+}
+
+input reviewsAndRatingsCreateInput {
+  reviewTitle: String
+  reviewText: String
+  rating: Int
+  car: CarRelateToOneForCreateInput
+  reviewerName: String
+  reviewerEmail: String
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+input CarRelateToOneForCreateInput {
+  create: CarCreateInput
+  connect: CarWhereUniqueInput
+}
+
+type media {
+  id: ID!
+  title: String
+  description: String
+  mediaType: String
+  mediaFile: ImageFieldOutput
+  videoURL: String
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+input mediaWhereUniqueInput {
+  id: ID
+}
+
+input mediaWhereInput {
+  AND: [mediaWhereInput!]
+  OR: [mediaWhereInput!]
+  NOT: [mediaWhereInput!]
+  id: IDFilter
+  title: StringFilter
+  description: StringFilter
+  mediaType: StringFilter
+  videoURL: StringFilter
+  createdAt: DateTimeNullableFilter
+  updatedAt: DateTimeNullableFilter
+}
+
+input mediaOrderByInput {
+  id: OrderDirection
+  title: OrderDirection
+  description: OrderDirection
+  mediaType: OrderDirection
+  videoURL: OrderDirection
+  createdAt: OrderDirection
+  updatedAt: OrderDirection
+}
+
+input mediaUpdateInput {
+  title: String
+  description: String
+  mediaType: String
+  mediaFile: ImageFieldInput
+  videoURL: String
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+input mediaUpdateArgs {
+  where: mediaWhereUniqueInput!
+  data: mediaUpdateInput!
+}
+
+input mediaCreateInput {
+  title: String
+  description: String
+  mediaType: String
+  mediaFile: ImageFieldInput
+  videoURL: String
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+type carSpecification {
+  id: ID!
+  car: Car
+  agency: Agency
+  engineType: String
+  horsepower: Int
+  torque: Int
+  topSpeed: Int
+  acceleration: String
+  transmission: String
+  drivetrain: String
+  fuelCapacity: Float
+  fuelEconomyCity: Float
+  fuelEconomyHighway: Float
+  emissionsRating: String
+  airbags: Int
+  warrantyYears: Int
+  images: ImageFieldOutput
+  listedDate: DateTime
+}
+
+input carSpecificationWhereUniqueInput {
+  id: ID
+}
+
+input carSpecificationWhereInput {
+  AND: [carSpecificationWhereInput!]
+  OR: [carSpecificationWhereInput!]
+  NOT: [carSpecificationWhereInput!]
+  id: IDFilter
+  car: CarWhereInput
+  agency: AgencyWhereInput
+  engineType: StringNullableFilter
+  horsepower: IntNullableFilter
+  torque: IntNullableFilter
+  topSpeed: IntNullableFilter
+  acceleration: StringFilter
+  transmission: StringNullableFilter
+  drivetrain: StringNullableFilter
+  fuelCapacity: FloatNullableFilter
+  fuelEconomyCity: FloatNullableFilter
+  fuelEconomyHighway: FloatNullableFilter
+  emissionsRating: StringFilter
+  airbags: IntNullableFilter
+  warrantyYears: IntNullableFilter
+  listedDate: DateTimeNullableFilter
+}
+
+input carSpecificationOrderByInput {
+  id: OrderDirection
+  engineType: OrderDirection
+  horsepower: OrderDirection
+  torque: OrderDirection
+  topSpeed: OrderDirection
+  acceleration: OrderDirection
+  transmission: OrderDirection
+  drivetrain: OrderDirection
+  fuelCapacity: OrderDirection
+  fuelEconomyCity: OrderDirection
+  fuelEconomyHighway: OrderDirection
+  emissionsRating: OrderDirection
+  airbags: OrderDirection
+  warrantyYears: OrderDirection
+  listedDate: OrderDirection
+}
+
+input carSpecificationUpdateInput {
+  car: CarRelateToOneForUpdateInput
+  agency: AgencyRelateToOneForUpdateInput
+  engineType: String
+  horsepower: Int
+  torque: Int
+  topSpeed: Int
+  acceleration: String
+  transmission: String
+  drivetrain: String
+  fuelCapacity: Float
+  fuelEconomyCity: Float
+  fuelEconomyHighway: Float
+  emissionsRating: String
+  airbags: Int
+  warrantyYears: Int
+  images: ImageFieldInput
+  listedDate: DateTime
+}
+
+input AgencyRelateToOneForUpdateInput {
+  create: AgencyCreateInput
+  connect: AgencyWhereUniqueInput
+  disconnect: Boolean
+}
+
+input carSpecificationUpdateArgs {
+  where: carSpecificationWhereUniqueInput!
+  data: carSpecificationUpdateInput!
+}
+
+input carSpecificationCreateInput {
+  car: CarRelateToOneForCreateInput
+  agency: AgencyRelateToOneForCreateInput
+  engineType: String
+  horsepower: Int
+  torque: Int
+  topSpeed: Int
+  acceleration: String
+  transmission: String
+  drivetrain: String
+  fuelCapacity: Float
+  fuelEconomyCity: Float
+  fuelEconomyHighway: Float
+  emissionsRating: String
+  airbags: Int
+  warrantyYears: Int
+  images: ImageFieldInput
+  listedDate: DateTime
+}
+
+input AgencyRelateToOneForCreateInput {
+  create: AgencyCreateInput
+  connect: AgencyWhereUniqueInput
+}
+
+type contactInquiry {
+  id: ID!
+  fullName: String
+  phoneNumber: String
+  message: String
+  inquiryType: String
+  relatedAgency: Agency
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+input contactInquiryWhereUniqueInput {
+  id: ID
+}
+
+input contactInquiryWhereInput {
+  AND: [contactInquiryWhereInput!]
+  OR: [contactInquiryWhereInput!]
+  NOT: [contactInquiryWhereInput!]
+  id: IDFilter
+  fullName: StringFilter
+  phoneNumber: StringFilter
+  message: StringFilter
+  inquiryType: StringNullableFilter
+  relatedAgency: AgencyWhereInput
+  createdAt: DateTimeNullableFilter
+  updatedAt: DateTimeNullableFilter
+}
+
+input contactInquiryOrderByInput {
+  id: OrderDirection
+  fullName: OrderDirection
+  phoneNumber: OrderDirection
+  message: OrderDirection
+  inquiryType: OrderDirection
+  createdAt: OrderDirection
+  updatedAt: OrderDirection
+}
+
+input contactInquiryUpdateInput {
+  fullName: String
+  phoneNumber: String
+  message: String
+  inquiryType: String
+  relatedAgency: AgencyRelateToOneForUpdateInput
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+input contactInquiryUpdateArgs {
+  where: contactInquiryWhereUniqueInput!
+  data: contactInquiryUpdateInput!
+}
+
+input contactInquiryCreateInput {
+  fullName: String
+  phoneNumber: String
+  message: String
+  inquiryType: String
+  relatedAgency: AgencyRelateToOneForCreateInput
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
 """
 The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 """
@@ -765,6 +1272,42 @@ type Mutation {
   updateInvoices(data: [InvoiceUpdateArgs!]!): [Invoice]
   deleteInvoice(where: InvoiceWhereUniqueInput!): Invoice
   deleteInvoices(where: [InvoiceWhereUniqueInput!]!): [Invoice]
+  createsettings(data: settingsCreateInput!): settings
+  createSettings(data: [settingsCreateInput!]!): [settings]
+  updatesettings(where: settingsWhereUniqueInput!, data: settingsUpdateInput!): settings
+  updateSettings(data: [settingsUpdateArgs!]!): [settings]
+  deletesettings(where: settingsWhereUniqueInput!): settings
+  deleteSettings(where: [settingsWhereUniqueInput!]!): [settings]
+  createresponsiveConfig(data: responsiveConfigCreateInput!): responsiveConfig
+  createResponsiveConfigs(data: [responsiveConfigCreateInput!]!): [responsiveConfig]
+  updateresponsiveConfig(where: responsiveConfigWhereUniqueInput!, data: responsiveConfigUpdateInput!): responsiveConfig
+  updateResponsiveConfigs(data: [responsiveConfigUpdateArgs!]!): [responsiveConfig]
+  deleteresponsiveConfig(where: responsiveConfigWhereUniqueInput!): responsiveConfig
+  deleteResponsiveConfigs(where: [responsiveConfigWhereUniqueInput!]!): [responsiveConfig]
+  createreviewsAndRatings(data: reviewsAndRatingsCreateInput!): reviewsAndRatings
+  createReviewsAndRatings(data: [reviewsAndRatingsCreateInput!]!): [reviewsAndRatings]
+  updatereviewsAndRatings(where: reviewsAndRatingsWhereUniqueInput!, data: reviewsAndRatingsUpdateInput!): reviewsAndRatings
+  updateReviewsAndRatings(data: [reviewsAndRatingsUpdateArgs!]!): [reviewsAndRatings]
+  deletereviewsAndRatings(where: reviewsAndRatingsWhereUniqueInput!): reviewsAndRatings
+  deleteReviewsAndRatings(where: [reviewsAndRatingsWhereUniqueInput!]!): [reviewsAndRatings]
+  createmedia(data: mediaCreateInput!): media
+  createMedia(data: [mediaCreateInput!]!): [media]
+  updatemedia(where: mediaWhereUniqueInput!, data: mediaUpdateInput!): media
+  updateMedia(data: [mediaUpdateArgs!]!): [media]
+  deletemedia(where: mediaWhereUniqueInput!): media
+  deleteMedia(where: [mediaWhereUniqueInput!]!): [media]
+  createcarSpecification(data: carSpecificationCreateInput!): carSpecification
+  createCarSpecifications(data: [carSpecificationCreateInput!]!): [carSpecification]
+  updatecarSpecification(where: carSpecificationWhereUniqueInput!, data: carSpecificationUpdateInput!): carSpecification
+  updateCarSpecifications(data: [carSpecificationUpdateArgs!]!): [carSpecification]
+  deletecarSpecification(where: carSpecificationWhereUniqueInput!): carSpecification
+  deleteCarSpecifications(where: [carSpecificationWhereUniqueInput!]!): [carSpecification]
+  createcontactInquiry(data: contactInquiryCreateInput!): contactInquiry
+  createContactInquiries(data: [contactInquiryCreateInput!]!): [contactInquiry]
+  updatecontactInquiry(where: contactInquiryWhereUniqueInput!, data: contactInquiryUpdateInput!): contactInquiry
+  updateContactInquiries(data: [contactInquiryUpdateArgs!]!): [contactInquiry]
+  deletecontactInquiry(where: contactInquiryWhereUniqueInput!): contactInquiry
+  deleteContactInquiries(where: [contactInquiryWhereUniqueInput!]!): [contactInquiry]
   endSession: Boolean!
   authenticateUserWithPassword(email: String!, password: String!): UserAuthenticationWithPasswordResult
   createInitialUser(data: CreateInitialUserInput!): UserAuthenticationWithPasswordSuccess!
@@ -800,6 +1343,21 @@ type Query {
   invoice(where: InvoiceWhereUniqueInput!): Invoice
   invoices(where: InvoiceWhereInput! = {}, orderBy: [InvoiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: InvoiceWhereUniqueInput): [Invoice!]
   invoicesCount(where: InvoiceWhereInput! = {}): Int
+  settings(where: settingsWhereInput! = {}, orderBy: [settingsOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: settingsWhereUniqueInput): [settings!]
+  settingsCount(where: settingsWhereInput! = {}): Int
+  responsiveConfig(where: responsiveConfigWhereUniqueInput!): responsiveConfig
+  responsiveConfigs(where: responsiveConfigWhereInput! = {}, orderBy: [responsiveConfigOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: responsiveConfigWhereUniqueInput): [responsiveConfig!]
+  responsiveConfigsCount(where: responsiveConfigWhereInput! = {}): Int
+  reviewsAndRatings(where: reviewsAndRatingsWhereInput! = {}, orderBy: [reviewsAndRatingsOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: reviewsAndRatingsWhereUniqueInput): [reviewsAndRatings!]
+  reviewsAndRatingsCount(where: reviewsAndRatingsWhereInput! = {}): Int
+  media(where: mediaWhereInput! = {}, orderBy: [mediaOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: mediaWhereUniqueInput): [media!]
+  mediaCount(where: mediaWhereInput! = {}): Int
+  carSpecification(where: carSpecificationWhereUniqueInput!): carSpecification
+  carSpecifications(where: carSpecificationWhereInput! = {}, orderBy: [carSpecificationOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: carSpecificationWhereUniqueInput): [carSpecification!]
+  carSpecificationsCount(where: carSpecificationWhereInput! = {}): Int
+  contactInquiry(where: contactInquiryWhereUniqueInput!): contactInquiry
+  contactInquiries(where: contactInquiryWhereInput! = {}, orderBy: [contactInquiryOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: contactInquiryWhereUniqueInput): [contactInquiry!]
+  contactInquiriesCount(where: contactInquiryWhereInput! = {}): Int
   keystone: KeystoneMeta!
   authenticatedItem: AuthenticatedItem
 }

@@ -188,12 +188,29 @@ export const Cars = list({
     usbPorts: integer(),
     speakerSystem: text(),
 
-    agency: relationship({
+    /*agency: relationship({
       ref: 'Agency', many: true, ui: {
         displayMode: 'select',
         labelField: 'agencyFullName',
       }
+    }),*/
+    
+    
+    
+    
+    agency: relationship({
+      ref: "Agency", // Utilisation du bon nom
+      many: true,
+      ui: {
+        displayMode: "select",
+        labelField: "agencyFullName",
+      }
     }),
+
+
+
+    
+    
     status: select({
       options: [
         { label: 'Available', value: 'available' },
