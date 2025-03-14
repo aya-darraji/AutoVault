@@ -43,6 +43,7 @@ model Agency {
   from_Invoice_agency               Invoice[]          @relation("Invoice_agency")
   from_carSpecification_agency      carSpecification[] @relation("carSpecification_agency")
   from_contactInquiry_relatedAgency contactInquiry[]   @relation("contactInquiry_relatedAgency")
+  from_carListings_agency           carListings[]      @relation("carListings_agency")
 }
 
 model Car {
@@ -114,6 +115,7 @@ model Car {
   from_Invoice_car           Invoice[]           @relation("Invoice_car")
   from_reviewsAndRatings_car reviewsAndRatings[] @relation("reviewsAndRatings_car")
   from_carSpecification_car  carSpecification[]  @relation("carSpecification_car")
+  from_carListings_car       carListings[]       @relation("carListings_car")
 }
 
 model Invoice {
@@ -236,4 +238,37 @@ model contactInquiry {
   updatedAt       DateTime? @default(now())
 
   @@index([relatedAgencyId])
+}
+
+model carSearchFilter {
+  id          String  @id @default(cuid())
+  searchQuery String  @default("")
+  model       String?
+  year        Int?
+  priceMin    Int?
+  priceMax    Int?
+  color       String?
+}
+
+model carListings {
+  id               String    @id @default(cuid())
+  title            String    @default("")
+  description      String    @default("")
+  price            Int
+  status           String?   @default("available")
+  car              Car?      @relation("carListings_car", fields: [carId], references: [id])
+  carId            String?   @map("car")
+  agency           Agency?   @relation("carListings_agency", fields: [agencyId], references: [id])
+  agencyId         String?   @map("agency")
+  images_id        String?
+  images_filesize  Int?
+  images_width     Int?
+  images_height    Int?
+  images_extension String?
+  videoURL         String    @default("")
+  listedDate       DateTime? @default(now())
+  featured         Boolean   @default(false)
+
+  @@index([carId])
+  @@index([agencyId])
 }

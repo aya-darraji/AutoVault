@@ -1,6 +1,9 @@
 import { list } from '@keystone-6/core';
 import { allowAll } from '@keystone-6/core/access';
 import { text, integer, relationship, select, checkbox, float, timestamp, image } from '@keystone-6/core/fields';
+import QRCode from 'qrcode';
+
+
 
 export const Cars = list({
   fields: {
@@ -234,5 +237,20 @@ export const Cars = list({
     }),
     registrationValidUntil: timestamp(),
   },
-  access: allowAll
+  /***parte qrcode  */
+  qrCodeUrl: text(),  // Ajouter un champ pour stocker l'URL du QR Code
+
+  access: allowAll,
+  hooks: {
+    async afterOperation({ operation, item, context }) {
+      if (operation === 'create' || operation === 'update') {
+        // Générer le QR Code lors de la création ou mise à jour d'une voiture
+        const carUrl = `${process.env.BASE_URL}/cars/${item.id}`; // URL de la page de détail de la voiture
+        const qrCode = await QRCode.toDataURL(carUrl); // Générer l'URL du QR code
+        
+        // Ici, vous pouvez soit envoyer l'image du QR code directement au frontend, soit l'enregistrer dans un autre système de stockage
+        // Exemple d'enregistrement dans un stockage externe si nécessaire
+      }
+    },
+  },
 });

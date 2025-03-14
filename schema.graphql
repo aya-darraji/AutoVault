@@ -1242,6 +1242,142 @@ input contactInquiryCreateInput {
   updatedAt: DateTime
 }
 
+type carSearchFilter {
+  id: ID!
+  searchQuery: String
+  model: String
+  year: Int
+  priceMin: Int
+  priceMax: Int
+  color: String
+}
+
+input carSearchFilterWhereUniqueInput {
+  id: ID
+}
+
+input carSearchFilterWhereInput {
+  AND: [carSearchFilterWhereInput!]
+  OR: [carSearchFilterWhereInput!]
+  NOT: [carSearchFilterWhereInput!]
+  id: IDFilter
+  searchQuery: StringFilter
+  model: StringNullableFilter
+  year: IntNullableFilter
+  priceMin: IntNullableFilter
+  priceMax: IntNullableFilter
+  color: StringNullableFilter
+}
+
+input carSearchFilterOrderByInput {
+  id: OrderDirection
+  searchQuery: OrderDirection
+  model: OrderDirection
+  year: OrderDirection
+  priceMin: OrderDirection
+  priceMax: OrderDirection
+  color: OrderDirection
+}
+
+input carSearchFilterUpdateInput {
+  searchQuery: String
+  model: String
+  year: Int
+  priceMin: Int
+  priceMax: Int
+  color: String
+}
+
+input carSearchFilterUpdateArgs {
+  where: carSearchFilterWhereUniqueInput!
+  data: carSearchFilterUpdateInput!
+}
+
+input carSearchFilterCreateInput {
+  searchQuery: String
+  model: String
+  year: Int
+  priceMin: Int
+  priceMax: Int
+  color: String
+}
+
+type carListings {
+  id: ID!
+  title: String
+  description: String
+  price: Int
+  status: String
+  car: Car
+  agency: Agency
+  images: ImageFieldOutput
+  videoURL: String
+  listedDate: DateTime
+  featured: Boolean
+}
+
+input carListingsWhereUniqueInput {
+  id: ID
+}
+
+input carListingsWhereInput {
+  AND: [carListingsWhereInput!]
+  OR: [carListingsWhereInput!]
+  NOT: [carListingsWhereInput!]
+  id: IDFilter
+  title: StringFilter
+  description: StringFilter
+  price: IntFilter
+  status: StringNullableFilter
+  car: CarWhereInput
+  agency: AgencyWhereInput
+  videoURL: StringFilter
+  listedDate: DateTimeNullableFilter
+  featured: BooleanFilter
+}
+
+input carListingsOrderByInput {
+  id: OrderDirection
+  title: OrderDirection
+  description: OrderDirection
+  price: OrderDirection
+  status: OrderDirection
+  videoURL: OrderDirection
+  listedDate: OrderDirection
+  featured: OrderDirection
+}
+
+input carListingsUpdateInput {
+  title: String
+  description: String
+  price: Int
+  status: String
+  car: CarRelateToOneForUpdateInput
+  agency: AgencyRelateToOneForUpdateInput
+  images: ImageFieldInput
+  videoURL: String
+  listedDate: DateTime
+  featured: Boolean
+}
+
+input carListingsUpdateArgs {
+  where: carListingsWhereUniqueInput!
+  data: carListingsUpdateInput!
+}
+
+input carListingsCreateInput {
+  title: String
+  description: String
+  price: Int
+  status: String
+  car: CarRelateToOneForCreateInput
+  agency: AgencyRelateToOneForCreateInput
+  images: ImageFieldInput
+  videoURL: String
+  listedDate: DateTime
+  featured: Boolean
+}
+
 """
 The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 """
@@ -1308,6 +1444,18 @@ type Mutation {
   updateContactInquiries(data: [contactInquiryUpdateArgs!]!): [contactInquiry]
   deletecontactInquiry(where: contactInquiryWhereUniqueInput!): contactInquiry
   deleteContactInquiries(where: [contactInquiryWhereUniqueInput!]!): [contactInquiry]
+  createcarSearchFilter(data: carSearchFilterCreateInput!): carSearchFilter
+  createCarSearchFilters(data: [carSearchFilterCreateInput!]!): [carSearchFilter]
+  updatecarSearchFilter(where: carSearchFilterWhereUniqueInput!, data: carSearchFilterUpdateInput!): carSearchFilter
+  updateCarSearchFilters(data: [carSearchFilterUpdateArgs!]!): [carSearchFilter]
+  deletecarSearchFilter(where: carSearchFilterWhereUniqueInput!): carSearchFilter
+  deleteCarSearchFilters(where: [carSearchFilterWhereUniqueInput!]!): [carSearchFilter]
+  createcarListings(data: carListingsCreateInput!): carListings
+  createCarListings(data: [carListingsCreateInput!]!): [carListings]
+  updatecarListings(where: carListingsWhereUniqueInput!, data: carListingsUpdateInput!): carListings
+  updateCarListings(data: [carListingsUpdateArgs!]!): [carListings]
+  deletecarListings(where: carListingsWhereUniqueInput!): carListings
+  deleteCarListings(where: [carListingsWhereUniqueInput!]!): [carListings]
   endSession: Boolean!
   authenticateUserWithPassword(email: String!, password: String!): UserAuthenticationWithPasswordResult
   createInitialUser(data: CreateInitialUserInput!): UserAuthenticationWithPasswordSuccess!
@@ -1358,6 +1506,11 @@ type Query {
   contactInquiry(where: contactInquiryWhereUniqueInput!): contactInquiry
   contactInquiries(where: contactInquiryWhereInput! = {}, orderBy: [contactInquiryOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: contactInquiryWhereUniqueInput): [contactInquiry!]
   contactInquiriesCount(where: contactInquiryWhereInput! = {}): Int
+  carSearchFilter(where: carSearchFilterWhereUniqueInput!): carSearchFilter
+  carSearchFilters(where: carSearchFilterWhereInput! = {}, orderBy: [carSearchFilterOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: carSearchFilterWhereUniqueInput): [carSearchFilter!]
+  carSearchFiltersCount(where: carSearchFilterWhereInput! = {}): Int
+  carListings(where: carListingsWhereInput! = {}, orderBy: [carListingsOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: carListingsWhereUniqueInput): [carListings!]
+  carListingsCount(where: carListingsWhereInput! = {}): Int
   keystone: KeystoneMeta!
   authenticatedItem: AuthenticatedItem
 }
@@ -1375,24 +1528,25 @@ type KeystoneAdminMeta {
 
 type KeystoneAdminUIListMeta {
   key: String!
-  itemQueryName: String!
-  listQueryName: String!
-  hideCreate: Boolean!
-  hideDelete: Boolean!
   path: String!
   label: String!
   singular: String!
   plural: String!
   description: String
-  initialColumns: [String!]!
   pageSize: Int!
   labelField: String!
   fields: [KeystoneAdminUIFieldMeta!]!
   groups: [KeystoneAdminUIFieldGroupMeta!]!
   graphql: KeystoneAdminUIGraphQL!
+  initialColumns: [String!]!
+  initialSearchFields: [String!]!
   initialSort: KeystoneAdminUISort
-  isHidden: Boolean!
   isSingleton: Boolean!
+  hideCreate: Boolean!
+  hideDelete: Boolean!
+  isHidden: Boolean!
+  itemQueryName: String!
+  listQueryName: String!
 }
 
 type KeystoneAdminUIFieldMeta {

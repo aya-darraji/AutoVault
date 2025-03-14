@@ -24,6 +24,8 @@ export default withAuth(
         },
         storagePath: 'public/images',
       },
+      
     }
   })
+  
 )
