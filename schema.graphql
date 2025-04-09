@@ -721,7 +721,7 @@ input UserRelateToManyForCreateInput {
   connect: [UserWhereUniqueInput!]
 }
 
-type settings {
+type setting {
   id: ID!
   brand: String
   bodyType: String
@@ -742,14 +742,14 @@ type settings {
   fuelCapacity: Float
 }
 
-input settingsWhereUniqueInput {
+input settingWhereUniqueInput {
   id: ID
 }
 
-input settingsWhereInput {
-  AND: [settingsWhereInput!]
-  OR: [settingsWhereInput!]
-  NOT: [settingsWhereInput!]
+input settingWhereInput {
+  AND: [settingWhereInput!]
+  OR: [settingWhereInput!]
+  NOT: [settingWhereInput!]
   id: IDFilter
   brand: StringFilter
   bodyType: StringNullableFilter
@@ -770,7 +770,7 @@ input settingsWhereInput {
   fuelCapacity: FloatNullableFilter
 }
 
-input settingsOrderByInput {
+input settingOrderByInput {
   id: OrderDirection
   brand: OrderDirection
   bodyType: OrderDirection
@@ -791,7 +791,7 @@ input settingsOrderByInput {
   fuelCapacity: OrderDirection
 }
 
-input settingsUpdateInput {
+input settingUpdateInput {
   brand: String
   bodyType: String
   engineType: String
@@ -811,12 +811,12 @@ input settingsUpdateInput {
   fuelCapacity: Float
 }
 
-input settingsUpdateArgs {
-  where: settingsWhereUniqueInput!
-  data: settingsUpdateInput!
+input settingUpdateArgs {
+  where: settingWhereUniqueInput!
+  data: settingUpdateInput!
 }
 
-input settingsCreateInput {
+input settingCreateInput {
   brand: String
   bodyType: String
   engineType: String
@@ -913,7 +913,7 @@ input UserRelateToOneForCreateInput {
   connect: UserWhereUniqueInput
 }
 
-type reviewsAndRatings {
+type reviewsAndRating {
   id: ID!
   reviewTitle: String
   reviewText: String
@@ -925,14 +925,14 @@ type reviewsAndRatings {
   updatedAt: DateTime
 }
 
-input reviewsAndRatingsWhereUniqueInput {
+input reviewsAndRatingWhereUniqueInput {
   id: ID
 }
 
-input reviewsAndRatingsWhereInput {
-  AND: [reviewsAndRatingsWhereInput!]
-  OR: [reviewsAndRatingsWhereInput!]
-  NOT: [reviewsAndRatingsWhereInput!]
+input reviewsAndRatingWhereInput {
+  AND: [reviewsAndRatingWhereInput!]
+  OR: [reviewsAndRatingWhereInput!]
+  NOT: [reviewsAndRatingWhereInput!]
   id: IDFilter
   reviewTitle: StringFilter
   reviewText: StringFilter
@@ -944,7 +944,7 @@ input reviewsAndRatingsWhereInput {
   updatedAt: DateTimeNullableFilter
 }
 
-input reviewsAndRatingsOrderByInput {
+input reviewsAndRatingOrderByInput {
   id: OrderDirection
   reviewTitle: OrderDirection
   reviewText: OrderDirection
@@ -955,7 +955,7 @@ input reviewsAndRatingsOrderByInput {
   updatedAt: OrderDirection
 }
 
-input reviewsAndRatingsUpdateInput {
+input reviewsAndRatingUpdateInput {
   reviewTitle: String
   reviewText: String
   rating: Int
@@ -972,12 +972,12 @@ input CarRelateToOneForUpdateInput {
   disconnect: Boolean
 }
 
-input reviewsAndRatingsUpdateArgs {
-  where: reviewsAndRatingsWhereUniqueInput!
-  data: reviewsAndRatingsUpdateInput!
+input reviewsAndRatingUpdateArgs {
+  where: reviewsAndRatingWhereUniqueInput!
+  data: reviewsAndRatingUpdateInput!
 }
 
-input reviewsAndRatingsCreateInput {
+input reviewsAndRatingCreateInput {
   reviewTitle: String
   reviewText: String
   rating: Int
@@ -993,7 +993,7 @@ input CarRelateToOneForCreateInput {
   connect: CarWhereUniqueInput
 }
 
-type media {
+type mediaUpload {
   id: ID!
   title: String
   description: String
@@ -1004,14 +1004,14 @@ type media {
   updatedAt: DateTime
 }
 
-input mediaWhereUniqueInput {
+input mediaUploadWhereUniqueInput {
   id: ID
 }
 
-input mediaWhereInput {
-  AND: [mediaWhereInput!]
-  OR: [mediaWhereInput!]
-  NOT: [mediaWhereInput!]
+input mediaUploadWhereInput {
+  AND: [mediaUploadWhereInput!]
+  OR: [mediaUploadWhereInput!]
+  NOT: [mediaUploadWhereInput!]
   id: IDFilter
   title: StringFilter
   description: StringFilter
@@ -1021,7 +1021,7 @@ input mediaWhereInput {
   updatedAt: DateTimeNullableFilter
 }
 
-input mediaOrderByInput {
+input mediaUploadOrderByInput {
   id: OrderDirection
   title: OrderDirection
   description: OrderDirection
@@ -1031,7 +1031,7 @@ input mediaOrderByInput {
   updatedAt: OrderDirection
 }
 
-input mediaUpdateInput {
+input mediaUploadUpdateInput {
   title: String
   description: String
   mediaType: String
@@ -1041,12 +1041,12 @@ input mediaUpdateInput {
   updatedAt: DateTime
 }
 
-input mediaUpdateArgs {
-  where: mediaWhereUniqueInput!
-  data: mediaUpdateInput!
+input mediaUploadUpdateArgs {
+  where: mediaUploadWhereUniqueInput!
+  data: mediaUploadUpdateInput!
 }
 
-input mediaCreateInput {
+input mediaUploadCreateInput {
   title: String
   description: String
   mediaType: String
@@ -1302,7 +1302,7 @@ input carSearchFilterCreateInput {
   color: String
 }
 
-type carListings {
+type carListing {
   id: ID!
   title: String
   description: String
@@ -1316,14 +1316,14 @@ type carListings {
   featured: Boolean
 }
 
-input carListingsWhereUniqueInput {
+input carListingWhereUniqueInput {
   id: ID
 }
 
-input carListingsWhereInput {
-  AND: [carListingsWhereInput!]
-  OR: [carListingsWhereInput!]
-  NOT: [carListingsWhereInput!]
+input carListingWhereInput {
+  AND: [carListingWhereInput!]
+  OR: [carListingWhereInput!]
+  NOT: [carListingWhereInput!]
   id: IDFilter
   title: StringFilter
   description: StringFilter
@@ -1336,7 +1336,7 @@ input carListingsWhereInput {
   featured: BooleanFilter
 }
 
-input carListingsOrderByInput {
+input carListingOrderByInput {
   id: OrderDirection
   title: OrderDirection
   description: OrderDirection
@@ -1347,7 +1347,7 @@ input carListingsOrderByInput {
   featured: OrderDirection
 }
 
-input carListingsUpdateInput {
+input carListingUpdateInput {
   title: String
   description: String
   price: Int
@@ -1360,12 +1360,12 @@ input carListingsUpdateInput {
   featured: Boolean
 }
 
-input carListingsUpdateArgs {
-  where: carListingsWhereUniqueInput!
-  data: carListingsUpdateInput!
+input carListingUpdateArgs {
+  where: carListingWhereUniqueInput!
+  data: carListingUpdateInput!
 }
 
-input carListingsCreateInput {
+input carListingCreateInput {
   title: String
   description: String
   price: Int
@@ -1408,30 +1408,30 @@ type Mutation {
   updateInvoices(data: [InvoiceUpdateArgs!]!): [Invoice]
   deleteInvoice(where: InvoiceWhereUniqueInput!): Invoice
   deleteInvoices(where: [InvoiceWhereUniqueInput!]!): [Invoice]
-  createsettings(data: settingsCreateInput!): settings
-  createSettings(data: [settingsCreateInput!]!): [settings]
-  updatesettings(where: settingsWhereUniqueInput!, data: settingsUpdateInput!): settings
-  updateSettings(data: [settingsUpdateArgs!]!): [settings]
-  deletesettings(where: settingsWhereUniqueInput!): settings
-  deleteSettings(where: [settingsWhereUniqueInput!]!): [settings]
+  createsetting(data: settingCreateInput!): setting
+  createSettings(data: [settingCreateInput!]!): [setting]
+  updatesetting(where: settingWhereUniqueInput!, data: settingUpdateInput!): setting
+  updateSettings(data: [settingUpdateArgs!]!): [setting]
+  deletesetting(where: settingWhereUniqueInput!): setting
+  deleteSettings(where: [settingWhereUniqueInput!]!): [setting]
   createresponsiveConfig(data: responsiveConfigCreateInput!): responsiveConfig
   createResponsiveConfigs(data: [responsiveConfigCreateInput!]!): [responsiveConfig]
   updateresponsiveConfig(where: responsiveConfigWhereUniqueInput!, data: responsiveConfigUpdateInput!): responsiveConfig
   updateResponsiveConfigs(data: [responsiveConfigUpdateArgs!]!): [responsiveConfig]
   deleteresponsiveConfig(where: responsiveConfigWhereUniqueInput!): responsiveConfig
   deleteResponsiveConfigs(where: [responsiveConfigWhereUniqueInput!]!): [responsiveConfig]
-  createreviewsAndRatings(data: reviewsAndRatingsCreateInput!): reviewsAndRatings
-  createReviewsAndRatings(data: [reviewsAndRatingsCreateInput!]!): [reviewsAndRatings]
-  updatereviewsAndRatings(where: reviewsAndRatingsWhereUniqueInput!, data: reviewsAndRatingsUpdateInput!): reviewsAndRatings
-  updateReviewsAndRatings(data: [reviewsAndRatingsUpdateArgs!]!): [reviewsAndRatings]
-  deletereviewsAndRatings(where: reviewsAndRatingsWhereUniqueInput!): reviewsAndRatings
-  deleteReviewsAndRatings(where: [reviewsAndRatingsWhereUniqueInput!]!): [reviewsAndRatings]
-  createmedia(data: mediaCreateInput!): media
-  createMedia(data: [mediaCreateInput!]!): [media]
-  updatemedia(where: mediaWhereUniqueInput!, data: mediaUpdateInput!): media
-  updateMedia(data: [mediaUpdateArgs!]!): [media]
-  deletemedia(where: mediaWhereUniqueInput!): media
-  deleteMedia(where: [mediaWhereUniqueInput!]!): [media]
+  createreviewsAndRating(data: reviewsAndRatingCreateInput!): reviewsAndRating
+  createReviewsAndRatings(data: [reviewsAndRatingCreateInput!]!): [reviewsAndRating]
+  updatereviewsAndRating(where: reviewsAndRatingWhereUniqueInput!, data: reviewsAndRatingUpdateInput!): reviewsAndRating
+  updateReviewsAndRatings(data: [reviewsAndRatingUpdateArgs!]!): [reviewsAndRating]
+  deletereviewsAndRating(where: reviewsAndRatingWhereUniqueInput!): reviewsAndRating
+  deleteReviewsAndRatings(where: [reviewsAndRatingWhereUniqueInput!]!): [reviewsAndRating]
+  createmediaUpload(data: mediaUploadCreateInput!): mediaUpload
+  createMediaUploads(data: [mediaUploadCreateInput!]!): [mediaUpload]
+  updatemediaUpload(where: mediaUploadWhereUniqueInput!, data: mediaUploadUpdateInput!): mediaUpload
+  updateMediaUploads(data: [mediaUploadUpdateArgs!]!): [mediaUpload]
+  deletemediaUpload(where: mediaUploadWhereUniqueInput!): mediaUpload
+  deleteMediaUploads(where: [mediaUploadWhereUniqueInput!]!): [mediaUpload]
   createcarSpecification(data: carSpecificationCreateInput!): carSpecification
   createCarSpecifications(data: [carSpecificationCreateInput!]!): [carSpecification]
   updatecarSpecification(where: carSpecificationWhereUniqueInput!, data: carSpecificationUpdateInput!): carSpecification
@@ -1450,12 +1450,12 @@ type Mutation {
   updateCarSearchFilters(data: [carSearchFilterUpdateArgs!]!): [carSearchFilter]
   deletecarSearchFilter(where: carSearchFilterWhereUniqueInput!): carSearchFilter
   deleteCarSearchFilters(where: [carSearchFilterWhereUniqueInput!]!): [carSearchFilter]
-  createcarListings(data: carListingsCreateInput!): carListings
-  createCarListings(data: [carListingsCreateInput!]!): [carListings]
-  updatecarListings(where: carListingsWhereUniqueInput!, data: carListingsUpdateInput!): carListings
-  updateCarListings(data: [carListingsUpdateArgs!]!): [carListings]
-  deletecarListings(where: carListingsWhereUniqueInput!): carListings
-  deleteCarListings(where: [carListingsWhereUniqueInput!]!): [carListings]
+  createcarListing(data: carListingCreateInput!): carListing
+  createCarListings(data: [carListingCreateInput!]!): [carListing]
+  updatecarListing(where: carListingWhereUniqueInput!, data: carListingUpdateInput!): carListing
+  updateCarListings(data: [carListingUpdateArgs!]!): [carListing]
+  deletecarListing(where: carListingWhereUniqueInput!): carListing
+  deleteCarListings(where: [carListingWhereUniqueInput!]!): [carListing]
   endSession: Boolean!
   authenticateUserWithPassword(email: String!, password: String!): UserAuthenticationWithPasswordResult
   createInitialUser(data: CreateInitialUserInput!): UserAuthenticationWithPasswordSuccess!
@@ -1491,15 +1491,18 @@ type Query {
   invoice(where: InvoiceWhereUniqueInput!): Invoice
   invoices(where: InvoiceWhereInput! = {}, orderBy: [InvoiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: InvoiceWhereUniqueInput): [Invoice!]
   invoicesCount(where: InvoiceWhereInput! = {}): Int
-  settings(where: settingsWhereInput! = {}, orderBy: [settingsOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: settingsWhereUniqueInput): [settings!]
-  settingsCount(where: settingsWhereInput! = {}): Int
+  setting(where: settingWhereUniqueInput!): setting
+  settings(where: settingWhereInput! = {}, orderBy: [settingOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: settingWhereUniqueInput): [setting!]
+  settingsCount(where: settingWhereInput! = {}): Int
   responsiveConfig(where: responsiveConfigWhereUniqueInput!): responsiveConfig
   responsiveConfigs(where: responsiveConfigWhereInput! = {}, orderBy: [responsiveConfigOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: responsiveConfigWhereUniqueInput): [responsiveConfig!]
   responsiveConfigsCount(where: responsiveConfigWhereInput! = {}): Int
-  reviewsAndRatings(where: reviewsAndRatingsWhereInput! = {}, orderBy: [reviewsAndRatingsOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: reviewsAndRatingsWhereUniqueInput): [reviewsAndRatings!]
-  reviewsAndRatingsCount(where: reviewsAndRatingsWhereInput! = {}): Int
-  media(where: mediaWhereInput! = {}, orderBy: [mediaOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: mediaWhereUniqueInput): [media!]
-  mediaCount(where: mediaWhereInput! = {}): Int
+  reviewsAndRating(where: reviewsAndRatingWhereUniqueInput!): reviewsAndRating
+  reviewsAndRatings(where: reviewsAndRatingWhereInput! = {}, orderBy: [reviewsAndRatingOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: reviewsAndRatingWhereUniqueInput): [reviewsAndRating!]
+  reviewsAndRatingsCount(where: reviewsAndRatingWhereInput! = {}): Int
+  mediaUpload(where: mediaUploadWhereUniqueInput!): mediaUpload
+  mediaUploads(where: mediaUploadWhereInput! = {}, orderBy: [mediaUploadOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: mediaUploadWhereUniqueInput): [mediaUpload!]
+  mediaUploadsCount(where: mediaUploadWhereInput! = {}): Int
   carSpecification(where: carSpecificationWhereUniqueInput!): carSpecification
   carSpecifications(where: carSpecificationWhereInput! = {}, orderBy: [carSpecificationOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: carSpecificationWhereUniqueInput): [carSpecification!]
   carSpecificationsCount(where: carSpecificationWhereInput! = {}): Int
@@ -1509,8 +1512,9 @@ type Query {
   carSearchFilter(where: carSearchFilterWhereUniqueInput!): carSearchFilter
   carSearchFilters(where: carSearchFilterWhereInput! = {}, orderBy: [carSearchFilterOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: carSearchFilterWhereUniqueInput): [carSearchFilter!]
   carSearchFiltersCount(where: carSearchFilterWhereInput! = {}): Int
-  carListings(where: carListingsWhereInput! = {}, orderBy: [carListingsOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: carListingsWhereUniqueInput): [carListings!]
-  carListingsCount(where: carListingsWhereInput! = {}): Int
+  carListing(where: carListingWhereUniqueInput!): carListing
+  carListings(where: carListingWhereInput! = {}, orderBy: [carListingOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: carListingWhereUniqueInput): [carListing!]
+  carListingsCount(where: carListingWhereInput! = {}): Int
   keystone: KeystoneMeta!
   authenticatedItem: AuthenticatedItem
 }

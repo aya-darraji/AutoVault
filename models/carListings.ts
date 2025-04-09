@@ -17,11 +17,8 @@ export const CarListings = list({
             defaultValue: "available",
         }),
         //car: relationship({ ref: "Cars", many: false, ui: { displayMode: "select", labelField: "name" } }),
-        car: relationship({ ref: "Cars", many: false, ui: { displayMode: "select", labelField: "name" } }),
-
 
         car: relationship({ ref: "Car", many: false, ui: { displayMode: "select", labelField: "name" } }),
-
 
 
         //agency: relationship({ ref: "Agencies", many: false, ui: { displayMode: "select", labelField: "agencyFullName" } }),

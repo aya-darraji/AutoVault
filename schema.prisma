@@ -43,79 +43,79 @@ model Agency {
   from_Invoice_agency               Invoice[]          @relation("Invoice_agency")
   from_carSpecification_agency      carSpecification[] @relation("carSpecification_agency")
   from_contactInquiry_relatedAgency contactInquiry[]   @relation("contactInquiry_relatedAgency")
-  from_carListings_agency           carListings[]      @relation("carListings_agency")
+  from_carListing_agency            carListing[]       @relation("carListing_agency")
 }
 
 model Car {
-  id                         String              @id @default(cuid())
-  name                       String              @default("")
-  model                      String
-  year                       Int
-  price                      Int
-  color                      String?
-  bodyType                   String?
-  engineType                 String?
-  horsepower                 Int?
-  torque                     Int?
-  topSpeed                   Int?
-  acceleration               String              @default("")
-  transmission               String?
-  drivetrain                 String?
-  fuelCapacity               Float?
-  fuelEconomyCity            Float?
-  fuelEconomyHighway         Float?
-  fuelEconomyCombined        Float?
-  emissionsRating            String              @default("")
-  airbags                    Int?
-  abs                        Boolean             @default(false)
-  tractionControl            Boolean             @default(false)
-  laneAssist                 Boolean             @default(false)
-  adaptiveCruiseControl      Boolean             @default(false)
-  blindSpotMonitor           Boolean             @default(false)
-  rearViewCamera             Boolean             @default(false)
-  parkingSensors             Boolean             @default(false)
-  autonomousDrivingLevel     String?
-  seats                      Int?
-  seatMaterial               String?
-  heatedSeats                Boolean             @default(false)
-  ventilatedSeats            Boolean             @default(false)
-  sunroof                    Boolean             @default(false)
-  climateControl             String?
-  infotainmentSystem         String              @default("")
-  touchscreenSize            Float?
-  wirelessCharging           Boolean             @default(false)
-  appleCarPlay               Boolean             @default(false)
-  androidAuto                Boolean             @default(false)
-  wheels                     String?
-  wheelSize                  Float?
-  ledHeadlights              Boolean             @default(false)
-  fogLights                  Boolean             @default(false)
-  tintedWindows              Boolean             @default(false)
-  cargoCapacity              Float?
-  towingCapacity             Float?
-  roofRack                   Boolean             @default(false)
-  trailerHitch               Boolean             @default(false)
-  bluetooth                  Boolean             @default(false)
-  wifiHotspot                Boolean             @default(false)
-  usbPorts                   Int?
-  speakerSystem              String              @default("")
-  agency                     Agency[]            @relation("Car_agency")
-  status                     String?             @default("available")
-  listedDate                 DateTime?           @default(now())
-  warrantyYears              Int?
-  images_id                  String?
-  images_filesize            Int?
-  images_width               Int?
-  images_height              Int?
-  images_extension           String?
-  videoURL                   String              @default("")
-  insuranceStatus            String?
-  registrationValidUntil     DateTime?
-  from_Agency_cars           Agency[]            @relation("Agency_cars")
-  from_Invoice_car           Invoice[]           @relation("Invoice_car")
-  from_reviewsAndRatings_car reviewsAndRatings[] @relation("reviewsAndRatings_car")
-  from_carSpecification_car  carSpecification[]  @relation("carSpecification_car")
-  from_carListings_car       carListings[]       @relation("carListings_car")
+  id                        String             @id @default(cuid())
+  name                      String             @default("")
+  model                     String
+  year                      Int
+  price                     Int
+  color                     String?
+  bodyType                  String?
+  engineType                String?
+  horsepower                Int?
+  torque                    Int?
+  topSpeed                  Int?
+  acceleration              String             @default("")
+  transmission              String?
+  drivetrain                String?
+  fuelCapacity              Float?
+  fuelEconomyCity           Float?
+  fuelEconomyHighway        Float?
+  fuelEconomyCombined       Float?
+  emissionsRating           String             @default("")
+  airbags                   Int?
+  abs                       Boolean            @default(false)
+  tractionControl           Boolean            @default(false)
+  laneAssist                Boolean            @default(false)
+  adaptiveCruiseControl     Boolean            @default(false)
+  blindSpotMonitor          Boolean            @default(false)
+  rearViewCamera            Boolean            @default(false)
+  parkingSensors            Boolean            @default(false)
+  autonomousDrivingLevel    String?
+  seats                     Int?
+  seatMaterial              String?
+  heatedSeats               Boolean            @default(false)
+  ventilatedSeats           Boolean            @default(false)
+  sunroof                   Boolean            @default(false)
+  climateControl            String?
+  infotainmentSystem        String             @default("")
+  touchscreenSize           Float?
+  wirelessCharging          Boolean            @default(false)
+  appleCarPlay              Boolean            @default(false)
+  androidAuto               Boolean            @default(false)
+  wheels                    String?
+  wheelSize                 Float?
+  ledHeadlights             Boolean            @default(false)
+  fogLights                 Boolean            @default(false)
+  tintedWindows             Boolean            @default(false)
+  cargoCapacity             Float?
+  towingCapacity            Float?
+  roofRack                  Boolean            @default(false)
+  trailerHitch              Boolean            @default(false)
+  bluetooth                 Boolean            @default(false)
+  wifiHotspot               Boolean            @default(false)
+  usbPorts                  Int?
+  speakerSystem             String             @default("")
+  agency                    Agency[]           @relation("Car_agency")
+  status                    String?            @default("available")
+  listedDate                DateTime?          @default(now())
+  warrantyYears             Int?
+  images_id                 String?
+  images_filesize           Int?
+  images_width              Int?
+  images_height             Int?
+  images_extension          String?
+  videoURL                  String             @default("")
+  insuranceStatus           String?
+  registrationValidUntil    DateTime?
+  from_Agency_cars          Agency[]           @relation("Agency_cars")
+  from_Invoice_car          Invoice[]          @relation("Invoice_car")
+  from_reviewsAndRating_car reviewsAndRating[] @relation("reviewsAndRating_car")
+  from_carSpecification_car carSpecification[] @relation("carSpecification_car")
+  from_carListing_car       carListing[]       @relation("carListing_car")
 }
 
 model Invoice {
@@ -130,7 +130,7 @@ model Invoice {
   car          Car[]    @relation("Invoice_car")
 }
 
-model settings {
+model setting {
   id              String  @id @default(cuid())
   brand           String
   bodyType        String?
@@ -166,12 +166,12 @@ model responsiveConfig {
   @@index([updatedById])
 }
 
-model reviewsAndRatings {
+model reviewsAndRating {
   id            String    @id @default(cuid())
   reviewTitle   String    @default("")
   reviewText    String    @default("")
   rating        Int
-  car           Car?      @relation("reviewsAndRatings_car", fields: [carId], references: [id])
+  car           Car?      @relation("reviewsAndRating_car", fields: [carId], references: [id])
   carId         String?   @map("car")
   reviewerName  String    @default("")
   reviewerEmail String    @default("")
@@ -181,7 +181,7 @@ model reviewsAndRatings {
   @@index([carId])
 }
 
-model media {
+model mediaUpload {
   id                  String    @id @default(cuid())
   title               String    @default("")
   description         String    @default("")
@@ -250,15 +250,15 @@ model carSearchFilter {
   color       String?
 }
 
-model carListings {
+model carListing {
   id               String    @id @default(cuid())
   title            String    @default("")
   description      String    @default("")
   price            Int
   status           String?   @default("available")
-  car              Car?      @relation("carListings_car", fields: [carId], references: [id])
+  car              Car?      @relation("carListing_car", fields: [carId], references: [id])
   carId            String?   @map("car")
-  agency           Agency?   @relation("carListings_agency", fields: [agencyId], references: [id])
+  agency           Agency?   @relation("carListing_agency", fields: [agencyId], references: [id])
   agencyId         String?   @map("agency")
   images_id        String?
   images_filesize  Int?

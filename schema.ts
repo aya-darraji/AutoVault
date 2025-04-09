@@ -24,17 +24,14 @@ export const lists = {
   Agency: Agencies,
   Car:Cars,
   Invoice:Invoices,
-  settings:Settings,
+  setting:Settings,
   responsiveConfig:ResponsiveConfig,
-  reviewsAndRatings:ReviewsAndRatings,
-  media:Media,
+  reviewsAndRating:ReviewsAndRatings,
+  mediaUpload:Media,
   carSpecification:CarSpecifications,
   contactInquiry:ContactInquiry,
   carSearchFilter:CarSearchFilter,
-  carListings :CarListings
-
-
-
+  carListing :CarListings
 
 
 } satisfies Lists
