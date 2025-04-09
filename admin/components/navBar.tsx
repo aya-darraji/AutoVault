@@ -3,14 +3,13 @@ import { NavigationContainer, NavItem } from '@keystone-6/core/admin-ui/componen
 import type { ListMeta } from '@keystone-6/core/types';
 import { useRouter } from 'next/router';
 import React from "react";
-import { BiCategoryAlt } from 'react-icons/bi';
-import { CgTemplate } from "react-icons/cg";
 import { HiOutlineUserGroup } from 'react-icons/hi';
 import { LiaFileInvoiceDollarSolid } from "react-icons/lia";
 import { MdOutlineDashboard, } from "react-icons/md";
 import { IoCarSportOutline } from "react-icons/io5";
-import { FaBuildingCircleCheck } from "react-icons/fa6";
 import { IoBusinessOutline } from "react-icons/io5";
+import { MdOutlineAnalytics } from "react-icons/md";
+import { TiCogOutline } from "react-icons/ti";
 
 const getIconForLabel = (label: string) => {
     switch (label) {
@@ -18,6 +17,7 @@ const getIconForLabel = (label: string) => {
         case "Agencies": return <IoBusinessOutline size={24} />
         case "Cars": return <IoCarSportOutline size={24} />
         case "Invoices": return <LiaFileInvoiceDollarSolid size={24} />
+        case "Site Settings": return <TiCogOutline size={24} />
 
 
     }
@@ -68,6 +68,19 @@ export const ListNavItems = ({ lists = [], include = [] }: { lists: ListMeta[], 
             {renderedList.map((list: ListMeta) => {
                 return <ListNavItem key={list.key} list={list} />;
             })}
+            <NavItem href={"/analytics"}>
+                <Flex align="center" >
+                    <Flex align="center" justify="center">
+                        <MdOutlineAnalytics size={24} />
+                    </Flex>
+                    <Flex w={10}></Flex>
+                    <Flex align="center" justify="center">
+
+                    Analytics
+                    </Flex>
+                </Flex>
+            </NavItem>
+
         </>
     );
 };

@@ -43,72 +43,73 @@ model Agency {
 }
 
 model Car {
-  id                     String    @id @default(cuid())
-  name                   String    @default("")
-  model                  String
-  year                   Int
-  price                  Int
-  color                  String?
-  bodyType               String?
-  engineType             String?
-  horsepower             Int?
-  torque                 Int?
-  topSpeed               Int?
-  acceleration           String    @default("")
-  transmission           String?
-  drivetrain             String?
-  fuelCapacity           Float?
-  fuelEconomyCity        Float?
-  fuelEconomyHighway     Float?
-  fuelEconomyCombined    Float?
-  emissionsRating        String    @default("")
-  airbags                Int?
-  abs                    Boolean   @default(false)
-  tractionControl        Boolean   @default(false)
-  laneAssist             Boolean   @default(false)
-  adaptiveCruiseControl  Boolean   @default(false)
-  blindSpotMonitor       Boolean   @default(false)
-  rearViewCamera         Boolean   @default(false)
-  parkingSensors         Boolean   @default(false)
-  autonomousDrivingLevel String?
-  seats                  Int?
-  seatMaterial           String?
-  heatedSeats            Boolean   @default(false)
-  ventilatedSeats        Boolean   @default(false)
-  sunroof                Boolean   @default(false)
-  climateControl         String?
-  infotainmentSystem     String    @default("")
-  touchscreenSize        Float?
-  wirelessCharging       Boolean   @default(false)
-  appleCarPlay           Boolean   @default(false)
-  androidAuto            Boolean   @default(false)
-  wheels                 String?
-  wheelSize              Float?
-  ledHeadlights          Boolean   @default(false)
-  fogLights              Boolean   @default(false)
-  tintedWindows          Boolean   @default(false)
-  cargoCapacity          Float?
-  towingCapacity         Float?
-  roofRack               Boolean   @default(false)
-  trailerHitch           Boolean   @default(false)
-  bluetooth              Boolean   @default(false)
-  wifiHotspot            Boolean   @default(false)
-  usbPorts               Int?
-  speakerSystem          String    @default("")
-  agency                 Agency[]  @relation("Car_agency")
-  status                 String?   @default("available")
-  listedDate             DateTime? @default(now())
-  warrantyYears          Int?
-  images_id              String?
-  images_filesize        Int?
-  images_width           Int?
-  images_height          Int?
-  images_extension       String?
-  videoURL               String    @default("")
-  insuranceStatus        String?
-  registrationValidUntil DateTime?
-  from_Agency_cars       Agency[]  @relation("Agency_cars")
-  from_Invoice_car       Invoice[] @relation("Invoice_car")
+  id                        String    @id @default(cuid())
+  name                      String    @default("")
+  model                     String
+  year                      Int
+  price                     Int
+  color                     String?
+  bodyType                  String?
+  engineType                String?
+  horsepower                Int?
+  torque                    Int?
+  topSpeed                  Int?
+  acceleration              String    @default("")
+  transmission              String?
+  drivetrain                String?
+  fuelCapacity              Float?
+  fuelEconomyCity           Float?
+  fuelEconomyHighway        Float?
+  fuelEconomyCombined       Float?
+  emissionsRating           String    @default("")
+  airbags                   Int?
+  abs                       Boolean   @default(false)
+  tractionControl           Boolean   @default(false)
+  laneAssist                Boolean   @default(false)
+  adaptiveCruiseControl     Boolean   @default(false)
+  blindSpotMonitor          Boolean   @default(false)
+  rearViewCamera            Boolean   @default(false)
+  parkingSensors            Boolean   @default(false)
+  autonomousDrivingLevel    String?
+  seats                     Int?
+  seatMaterial              String?
+  heatedSeats               Boolean   @default(false)
+  ventilatedSeats           Boolean   @default(false)
+  sunroof                   Boolean   @default(false)
+  climateControl            String?
+  infotainmentSystem        String    @default("")
+  touchscreenSize           Float?
+  wirelessCharging          Boolean   @default(false)
+  appleCarPlay              Boolean   @default(false)
+  androidAuto               Boolean   @default(false)
+  wheels                    String?
+  wheelSize                 Float?
+  ledHeadlights             Boolean   @default(false)
+  fogLights                 Boolean   @default(false)
+  tintedWindows             Boolean   @default(false)
+  cargoCapacity             Float?
+  towingCapacity            Float?
+  roofRack                  Boolean   @default(false)
+  trailerHitch              Boolean   @default(false)
+  bluetooth                 Boolean   @default(false)
+  wifiHotspot               Boolean   @default(false)
+  usbPorts                  Int?
+  speakerSystem             String    @default("")
+  agency                    Agency[]  @relation("Car_agency")
+  status                    String?   @default("available")
+  listedDate                DateTime? @default(now())
+  warrantyYears             Int?
+  images_id                 String?
+  images_filesize           Int?
+  images_width              Int?
+  images_height             Int?
+  images_extension          String?
+  videoURL                  String    @default("")
+  insuranceStatus           String?
+  registrationValidUntil    DateTime?
+  from_Agency_cars          Agency[]  @relation("Agency_cars")
+  from_Invoice_car          Invoice[] @relation("Invoice_car")
+  from_Setting_homepageCars Setting[] @relation("Setting_homepageCars")
 }
 
 model Invoice {
@@ -121,4 +122,17 @@ model Invoice {
   agency       Agency[] @relation("Invoice_agency")
   user         User[]   @relation("Invoice_user")
   car          Car[]    @relation("Invoice_car")
+}
+
+model Setting {
+  id                            Int     @id
+  siteTitle                     String  @default("")
+  homepageSubtitle              String  @default("")
+  homepageBannerImage_id        String?
+  homepageBannerImage_filesize  Int?
+  homepageBannerImage_width     Int?
+  homepageBannerImage_height    Int?
+  homepageBannerImage_extension String?
+  homepageCars                  Car[]   @relation("Setting_homepageCars")
+  footerText                    String  @default("")
 }
