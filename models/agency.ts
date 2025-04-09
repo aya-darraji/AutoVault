@@ -36,7 +36,7 @@ import { Cars } from './cars';
 })
     
 */
-
+/*
 
 export const Agencies = list({
     access: allowAll,
@@ -67,7 +67,10 @@ export const Agencies = list({
 
         //cars: relationship({ ref: 'Car', many: true }),
         cars: relationship({ ref: 'Car', many: true }),// f page contactInquiry te5dem heka bil cars ?? 
+        
 
+        
+        
         createdAt: timestamp({
             defaultValue: { kind: 'now' },
         }),
@@ -86,3 +89,58 @@ export const Agencies = list({
         },
     },
 });
+*/
+export const Agencies = list({
+    access: allowAll,
+    fields: {
+      agencyFullName: text({ validation: { isRequired: true } }),
+      agencyAvatar: image({ storage: 'localStorage' }),
+      agencyPhoneNumber: text({
+        validation: {
+          isRequired: true,
+          match: { regex: /^\d{8}$/ }
+        }
+      }),
+      agencyAddress: text({ validation: { isRequired: true } }),
+      agencyTaxNumber: text({ validation: { isRequired: true } }),
+      agencyCompanyType: select({
+        options: [
+          { label: 'SARL', value: 'SARL' },
+          { label: 'SUARL', value: 'SUARL' },
+          { label: 'SA', value: 'SA' },
+          { label: 'Other', value: 'Other' },
+        ],
+      }),
+      cars: relationship({ ref: 'Car', many: true }),
+      createdAt: timestamp({
+        defaultValue: { kind: 'now' },
+      }),
+      updatedAt: timestamp({
+        defaultValue: { kind: 'now' },
+      }),
+
+      transaction: relationship({
+        ref: 'transaction',
+        many: true
+      }),
+      // Ajout de la relation avec ReviewUsers
+      receivedReviews: relationship({
+        ref: 'reviewUsers',
+        many: true,
+        ui: {
+          displayMode: 'cards',
+          cardFields: ['userId', 'title', 'rating', 'reviewDate'],
+          linkToItem: true,
+        }
+      }),
+    },
+    
+    hooks: {
+      resolveInput: async ({ resolvedData, operation }) => {
+        if (operation === "update") {
+          resolvedData.updatedAt = new Date();
+        }
+        return resolvedData;
+      },
+    },
+  });

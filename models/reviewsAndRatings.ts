@@ -1,4 +1,4 @@
-import { list } from "@keystone-6/core";
+/*import { list } from "@keystone-6/core";
 import { allowAll } from "@keystone-6/core/access";
 import { text, timestamp, select, relationship, integer } from "@keystone-6/core/fields";
 
@@ -44,3 +44,4 @@ export const ReviewsAndRatings = list({
     },
   },
 });
+*/

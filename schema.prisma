@@ -18,10 +18,22 @@ model User {
   password                        String
   phone                           String             @default("")
   address                         String             @default("")
+  role                            String?            @default("user")
   createdAt                       DateTime?          @default(now())
   updatedAt                       DateTime?          @default(now())
+  rating                          rating?            @relation("User_rating", fields: [ratingId], references: [id])
+  ratingId                        String?            @map("rating")
+  favoris                         favoris[]          @relation("User_favoris")
+  comment                         comment[]          @relation("User_comment")
+  reviews                         reviewUsers[]      @relation("User_reviews")
   from_Invoice_user               Invoice[]          @relation("Invoice_user")
   from_responsiveConfig_updatedBy responsiveConfig[] @relation("responsiveConfig_updatedBy")
+  from_rating_user                rating[]           @relation("rating_user")
+  from_favoris_user               favoris[]          @relation("favoris_user")
+  from_comment_user               comment[]          @relation("comment_user")
+  from_reviewUsers_userId         reviewUsers[]      @relation("reviewUsers_userId")
+
+  @@index([ratingId])
 }
 
 model Agency {
@@ -39,11 +51,13 @@ model Agency {
   cars                              Car[]              @relation("Agency_cars")
   createdAt                         DateTime?          @default(now())
   updatedAt                         DateTime?          @default(now())
+  receivedReviews                   reviewUsers[]      @relation("Agency_receivedReviews")
   from_Car_agency                   Car[]              @relation("Car_agency")
   from_Invoice_agency               Invoice[]          @relation("Invoice_agency")
   from_carSpecification_agency      carSpecification[] @relation("carSpecification_agency")
   from_contactInquiry_relatedAgency contactInquiry[]   @relation("contactInquiry_relatedAgency")
   from_carListing_agency            carListing[]       @relation("carListing_agency")
+  from_reviewUsers_agencyId         reviewUsers[]      @relation("reviewUsers_agencyId")
 }
 
 model Car {
@@ -100,6 +114,9 @@ model Car {
   usbPorts                  Int?
   speakerSystem             String             @default("")
   agency                    Agency[]           @relation("Car_agency")
+  rating                    rating[]           @relation("Car_rating")
+  favoris                   favoris[]          @relation("Car_favoris")
+  comment                   comment[]          @relation("Car_comment")
   status                    String?            @default("available")
   listedDate                DateTime?          @default(now())
   warrantyYears             Int?
@@ -113,9 +130,11 @@ model Car {
   registrationValidUntil    DateTime?
   from_Agency_cars          Agency[]           @relation("Agency_cars")
   from_Invoice_car          Invoice[]          @relation("Invoice_car")
-  from_reviewsAndRating_car reviewsAndRating[] @relation("reviewsAndRating_car")
   from_carSpecification_car carSpecification[] @relation("carSpecification_car")
   from_carListing_car       carListing[]       @relation("carListing_car")
+  from_rating_car           rating[]           @relation("rating_car")
+  from_favoris_car          favoris[]          @relation("favoris_car")
+  from_comment_car          comment[]          @relation("comment_car")
 }
 
 model Invoice {
@@ -164,21 +183,6 @@ model responsiveConfig {
   updatedById       String?   @map("updatedBy")
 
   @@index([updatedById])
-}
-
-model reviewsAndRating {
-  id            String    @id @default(cuid())
-  reviewTitle   String    @default("")
-  reviewText    String    @default("")
-  rating        Int
-  car           Car?      @relation("reviewsAndRating_car", fields: [carId], references: [id])
-  carId         String?   @map("car")
-  reviewerName  String    @default("")
-  reviewerEmail String    @default("")
-  createdAt     DateTime? @default(now())
-  updatedAt     DateTime? @default(now())
-
-  @@index([carId])
 }
 
 model mediaUpload {
@@ -271,4 +275,68 @@ model carListing {
 
   @@index([carId])
   @@index([agencyId])
+}
+
+model rating {
+  id               String    @id @default(cuid())
+  reviewText       String    @default("")
+  rating           Int
+  user             User?     @relation("rating_user", fields: [userId], references: [id])
+  userId           String?   @map("user")
+  car              Car?      @relation("rating_car", fields: [carId], references: [id])
+  carId            String?   @map("car")
+  createdAt        DateTime? @default(now())
+  from_User_rating User[]    @relation("User_rating")
+  from_Car_rating  Car[]     @relation("Car_rating")
+
+  @@index([userId])
+  @@index([carId])
+}
+
+model favoris {
+  id                String   @id @default(cuid())
+  user              User?    @relation("favoris_user", fields: [userId], references: [id])
+  userId            String?  @map("user")
+  car               Car?     @relation("favoris_car", fields: [carId], references: [id])
+  carId             String?  @map("car")
+  addedDate         DateTime @default(now())
+  from_User_favoris User[]   @relation("User_favoris")
+  from_Car_favoris  Car[]    @relation("Car_favoris")
+
+  @@index([userId])
+  @@index([carId])
+}
+
+model comment {
+  id                String   @id @default(cuid())
+  content           String   @default("")
+  creationDate      DateTime @default(now())
+  user              User?    @relation("comment_user", fields: [userId], references: [id])
+  userId            String?  @map("user")
+  car               Car?     @relation("comment_car", fields: [carId], references: [id])
+  carId             String?  @map("car")
+  from_User_comment User[]   @relation("User_comment")
+  from_Car_comment  Car[]    @relation("Car_comment")
+
+  @@index([userId])
+  @@index([carId])
+}
+
+model reviewUsers {
+  id                          String    @id @default(cuid())
+  userId                      User?     @relation("reviewUsers_userId", fields: [userIdId], references: [id])
+  userIdId                    String?   @map("userId")
+  agencyId                    Agency?   @relation("reviewUsers_agencyId", fields: [agencyIdId], references: [id])
+  agencyIdId                  String?   @map("agencyId")
+  rating                      Int
+  title                       String    @default("")
+  content                     String    @default("")
+  reviewDate                  DateTime? @default(now())
+  createdAt                   DateTime? @default(now())
+  updatedAt                   DateTime? @default(now())
+  from_User_reviews           User[]    @relation("User_reviews")
+  from_Agency_receivedReviews Agency[]  @relation("Agency_receivedReviews")
+
+  @@index([userIdId])
+  @@index([agencyIdId])
 }

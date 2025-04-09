@@ -8,8 +8,16 @@ type User {
   password: PasswordState
   phone: String
   address: String
+  role: String
   createdAt: DateTime
   updatedAt: DateTime
+  rating: rating
+  favoris(where: favorisWhereInput! = {}, orderBy: [favorisOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: favorisWhereUniqueInput): [favoris!]
+  favorisCount(where: favorisWhereInput! = {}): Int
+  comment(where: commentWhereInput! = {}, orderBy: [commentOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: commentWhereUniqueInput): [comment!]
+  commentCount(where: commentWhereInput! = {}): Int
+  reviews(where: reviewUsersWhereInput! = {}, orderBy: [reviewUsersOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: reviewUsersWhereUniqueInput): [reviewUsers!]
+  reviewsCount(where: reviewUsersWhereInput! = {}): Int
 }
 
 type PasswordState {
@@ -32,8 +40,13 @@ input UserWhereInput {
   email: StringFilter
   phone: StringFilter
   address: StringFilter
+  role: StringNullableFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
+  rating: ratingWhereInput
+  favoris: favorisManyRelationFilter
+  comment: commentManyRelationFilter
+  reviews: reviewUsersManyRelationFilter
 }
 
 input IDFilter {
@@ -75,6 +88,20 @@ input NestedStringFilter {
   not: NestedStringFilter
 }
 
+input StringNullableFilter {
+  equals: String
+  in: [String!]
+  notIn: [String!]
+  lt: String
+  lte: String
+  gt: String
+  gte: String
+  contains: String
+  startsWith: String
+  endsWith: String
+  not: StringNullableFilter
+}
+
 input DateTimeNullableFilter {
   equals: DateTime
   in: [DateTime!]
@@ -86,12 +113,31 @@ input DateTimeNullableFilter {
   not: DateTimeNullableFilter
 }
 
+input favorisManyRelationFilter {
+  every: favorisWhereInput
+  some: favorisWhereInput
+  none: favorisWhereInput
+}
+
+input commentManyRelationFilter {
+  every: commentWhereInput
+  some: commentWhereInput
+  none: commentWhereInput
+}
+
+input reviewUsersManyRelationFilter {
+  every: reviewUsersWhereInput
+  some: reviewUsersWhereInput
+  none: reviewUsersWhereInput
+}
+
 input UserOrderByInput {
   id: OrderDirection
   fullName: OrderDirection
   email: OrderDirection
   phone: OrderDirection
   address: OrderDirection
+  role: OrderDirection
   createdAt: OrderDirection
   updatedAt: OrderDirection
 }
@@ -107,8 +153,40 @@ input UserUpdateInput {
   password: String
   phone: String
   address: String
+  role: String
   createdAt: DateTime
   updatedAt: DateTime
+  rating: ratingRelateToOneForUpdateInput
+  favoris: favorisRelateToManyForUpdateInput
+  comment: commentRelateToManyForUpdateInput
+  reviews: reviewUsersRelateToManyForUpdateInput
+}
+
+input ratingRelateToOneForUpdateInput {
+  create: ratingCreateInput
+  connect: ratingWhereUniqueInput
+  disconnect: Boolean
+}
+
+input favorisRelateToManyForUpdateInput {
+  disconnect: [favorisWhereUniqueInput!]
+  set: [favorisWhereUniqueInput!]
+  create: [favorisCreateInput!]
+  connect: [favorisWhereUniqueInput!]
+}
+
+input commentRelateToManyForUpdateInput {
+  disconnect: [commentWhereUniqueInput!]
+  set: [commentWhereUniqueInput!]
+  create: [commentCreateInput!]
+  connect: [commentWhereUniqueInput!]
+}
+
+input reviewUsersRelateToManyForUpdateInput {
+  disconnect: [reviewUsersWhereUniqueInput!]
+  set: [reviewUsersWhereUniqueInput!]
+  create: [reviewUsersCreateInput!]
+  connect: [reviewUsersWhereUniqueInput!]
 }
 
 input UserUpdateArgs {
@@ -122,8 +200,33 @@ input UserCreateInput {
   password: String
   phone: String
   address: String
+  role: String
   createdAt: DateTime
   updatedAt: DateTime
+  rating: ratingRelateToOneForCreateInput
+  favoris: favorisRelateToManyForCreateInput
+  comment: commentRelateToManyForCreateInput
+  reviews: reviewUsersRelateToManyForCreateInput
+}
+
+input ratingRelateToOneForCreateInput {
+  create: ratingCreateInput
+  connect: ratingWhereUniqueInput
+}
+
+input favorisRelateToManyForCreateInput {
+  create: [favorisCreateInput!]
+  connect: [favorisWhereUniqueInput!]
+}
+
+input commentRelateToManyForCreateInput {
+  create: [commentCreateInput!]
+  connect: [commentWhereUniqueInput!]
+}
+
+input reviewUsersRelateToManyForCreateInput {
+  create: [reviewUsersCreateInput!]
+  connect: [reviewUsersWhereUniqueInput!]
 }
 
 type Agency {
@@ -138,6 +241,8 @@ type Agency {
   carsCount(where: CarWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
+  receivedReviews(where: reviewUsersWhereInput! = {}, orderBy: [reviewUsersOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: reviewUsersWhereUniqueInput): [reviewUsers!]
+  receivedReviewsCount(where: reviewUsersWhereInput! = {}): Int
 }
 
 type ImageFieldOutput {
@@ -173,20 +278,7 @@ input AgencyWhereInput {
   cars: CarManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
-}
-
-input StringNullableFilter {
-  equals: String
-  in: [String!]
-  notIn: [String!]
-  lt: String
-  lte: String
-  gt: String
-  gte: String
-  contains: String
-  startsWith: String
-  endsWith: String
-  not: StringNullableFilter
+  receivedReviews: reviewUsersManyRelationFilter
 }
 
 input CarManyRelationFilter {
@@ -216,6 +308,7 @@ input AgencyUpdateInput {
   cars: CarRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
+  receivedReviews: reviewUsersRelateToManyForUpdateInput
 }
 
 input ImageFieldInput {
@@ -247,6 +340,7 @@ input AgencyCreateInput {
   cars: CarRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
+  receivedReviews: reviewUsersRelateToManyForCreateInput
 }
 
 input CarRelateToManyForCreateInput {
@@ -309,6 +403,12 @@ type Car {
   speakerSystem: String
   agency(where: AgencyWhereInput! = {}, orderBy: [AgencyOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AgencyWhereUniqueInput): [Agency!]
   agencyCount(where: AgencyWhereInput! = {}): Int
+  rating(where: ratingWhereInput! = {}, orderBy: [ratingOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ratingWhereUniqueInput): [rating!]
+  ratingCount(where: ratingWhereInput! = {}): Int
+  favoris(where: favorisWhereInput! = {}, orderBy: [favorisOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: favorisWhereUniqueInput): [favoris!]
+  favorisCount(where: favorisWhereInput! = {}): Int
+  comment(where: commentWhereInput! = {}, orderBy: [commentOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: commentWhereUniqueInput): [comment!]
+  commentCount(where: commentWhereInput! = {}): Int
   status: String
   listedDate: DateTime
   warrantyYears: Int
@@ -379,6 +479,9 @@ input CarWhereInput {
   usbPorts: IntNullableFilter
   speakerSystem: StringFilter
   agency: AgencyManyRelationFilter
+  rating: ratingManyRelationFilter
+  favoris: favorisManyRelationFilter
+  comment: commentManyRelationFilter
   status: StringNullableFilter
   listedDate: DateTimeNullableFilter
   warrantyYears: IntNullableFilter
@@ -429,6 +532,12 @@ input AgencyManyRelationFilter {
   every: AgencyWhereInput
   some: AgencyWhereInput
   none: AgencyWhereInput
+}
+
+input ratingManyRelationFilter {
+  every: ratingWhereInput
+  some: ratingWhereInput
+  none: ratingWhereInput
 }
 
 input CarOrderByInput {
@@ -545,6 +654,9 @@ input CarUpdateInput {
   usbPorts: Int
   speakerSystem: String
   agency: AgencyRelateToManyForUpdateInput
+  rating: ratingRelateToManyForUpdateInput
+  favoris: favorisRelateToManyForUpdateInput
+  comment: commentRelateToManyForUpdateInput
   status: String
   listedDate: DateTime
   warrantyYears: Int
@@ -559,6 +671,13 @@ input AgencyRelateToManyForUpdateInput {
   set: [AgencyWhereUniqueInput!]
   create: [AgencyCreateInput!]
   connect: [AgencyWhereUniqueInput!]
+}
+
+input ratingRelateToManyForUpdateInput {
+  disconnect: [ratingWhereUniqueInput!]
+  set: [ratingWhereUniqueInput!]
+  create: [ratingCreateInput!]
+  connect: [ratingWhereUniqueInput!]
 }
 
 input CarUpdateArgs {
@@ -619,6 +738,9 @@ input CarCreateInput {
   usbPorts: Int
   speakerSystem: String
   agency: AgencyRelateToManyForCreateInput
+  rating: ratingRelateToManyForCreateInput
+  favoris: favorisRelateToManyForCreateInput
+  comment: commentRelateToManyForCreateInput
   status: String
   listedDate: DateTime
   warrantyYears: Int
@@ -631,6 +753,11 @@ input CarCreateInput {
 input AgencyRelateToManyForCreateInput {
   create: [AgencyCreateInput!]
   connect: [AgencyWhereUniqueInput!]
+}
+
+input ratingRelateToManyForCreateInput {
+  create: [ratingCreateInput!]
+  connect: [ratingWhereUniqueInput!]
 }
 
 type Invoice {
@@ -913,86 +1040,6 @@ input UserRelateToOneForCreateInput {
   connect: UserWhereUniqueInput
 }
 
-type reviewsAndRating {
-  id: ID!
-  reviewTitle: String
-  reviewText: String
-  rating: Int
-  car: Car
-  reviewerName: String
-  reviewerEmail: String
-  createdAt: DateTime
-  updatedAt: DateTime
-}
-
-input reviewsAndRatingWhereUniqueInput {
-  id: ID
-}
-
-input reviewsAndRatingWhereInput {
-  AND: [reviewsAndRatingWhereInput!]
-  OR: [reviewsAndRatingWhereInput!]
-  NOT: [reviewsAndRatingWhereInput!]
-  id: IDFilter
-  reviewTitle: StringFilter
-  reviewText: StringFilter
-  rating: IntFilter
-  car: CarWhereInput
-  reviewerName: StringFilter
-  reviewerEmail: StringFilter
-  createdAt: DateTimeNullableFilter
-  updatedAt: DateTimeNullableFilter
-}
-
-input reviewsAndRatingOrderByInput {
-  id: OrderDirection
-  reviewTitle: OrderDirection
-  reviewText: OrderDirection
-  rating: OrderDirection
-  reviewerName: OrderDirection
-  reviewerEmail: OrderDirection
-  createdAt: OrderDirection
-  updatedAt: OrderDirection
-}
-
-input reviewsAndRatingUpdateInput {
-  reviewTitle: String
-  reviewText: String
-  rating: Int
-  car: CarRelateToOneForUpdateInput
-  reviewerName: String
-  reviewerEmail: String
-  createdAt: DateTime
-  updatedAt: DateTime
-}
-
-input CarRelateToOneForUpdateInput {
-  create: CarCreateInput
-  connect: CarWhereUniqueInput
-  disconnect: Boolean
-}
-
-input reviewsAndRatingUpdateArgs {
-  where: reviewsAndRatingWhereUniqueInput!
-  data: reviewsAndRatingUpdateInput!
-}
-
-input reviewsAndRatingCreateInput {
-  reviewTitle: String
-  reviewText: String
-  rating: Int
-  car: CarRelateToOneForCreateInput
-  reviewerName: String
-  reviewerEmail: String
-  createdAt: DateTime
-  updatedAt: DateTime
-}
-
-input CarRelateToOneForCreateInput {
-  create: CarCreateInput
-  connect: CarWhereUniqueInput
-}
-
 type mediaUpload {
   id: ID!
   title: String
@@ -1142,6 +1189,12 @@ input carSpecificationUpdateInput {
   listedDate: DateTime
 }
 
+input CarRelateToOneForUpdateInput {
+  create: CarCreateInput
+  connect: CarWhereUniqueInput
+  disconnect: Boolean
+}
+
 input AgencyRelateToOneForUpdateInput {
   create: AgencyCreateInput
   connect: AgencyWhereUniqueInput
@@ -1171,6 +1224,11 @@ input carSpecificationCreateInput {
   warrantyYears: Int
   images: ImageFieldInput
   listedDate: DateTime
+}
+
+input CarRelateToOneForCreateInput {
+  create: CarCreateInput
+  connect: CarWhereUniqueInput
 }
 
 input AgencyRelateToOneForCreateInput {
@@ -1378,6 +1436,229 @@ input carListingCreateInput {
   featured: Boolean
 }
 
+type rating {
+  id: ID!
+  reviewText: String
+  rating: Int
+  user: User
+  car: Car
+  createdAt: DateTime
+}
+
+input ratingWhereUniqueInput {
+  id: ID
+}
+
+input ratingWhereInput {
+  AND: [ratingWhereInput!]
+  OR: [ratingWhereInput!]
+  NOT: [ratingWhereInput!]
+  id: IDFilter
+  reviewText: StringFilter
+  rating: IntFilter
+  user: UserWhereInput
+  car: CarWhereInput
+  createdAt: DateTimeNullableFilter
+}
+
+input ratingOrderByInput {
+  id: OrderDirection
+  reviewText: OrderDirection
+  rating: OrderDirection
+  createdAt: OrderDirection
+}
+
+input ratingUpdateInput {
+  reviewText: String
+  rating: Int
+  user: UserRelateToOneForUpdateInput
+  car: CarRelateToOneForUpdateInput
+  createdAt: DateTime
+}
+
+input ratingUpdateArgs {
+  where: ratingWhereUniqueInput!
+  data: ratingUpdateInput!
+}
+
+input ratingCreateInput {
+  reviewText: String
+  rating: Int
+  user: UserRelateToOneForCreateInput
+  car: CarRelateToOneForCreateInput
+  createdAt: DateTime
+}
+
+type favoris {
+  id: ID!
+  user: User
+  car: Car
+  addedDate: DateTime
+}
+
+input favorisWhereUniqueInput {
+  id: ID
+}
+
+input favorisWhereInput {
+  AND: [favorisWhereInput!]
+  OR: [favorisWhereInput!]
+  NOT: [favorisWhereInput!]
+  id: IDFilter
+  user: UserWhereInput
+  car: CarWhereInput
+  addedDate: DateTimeFilter
+}
+
+input DateTimeFilter {
+  equals: DateTime
+  in: [DateTime!]
+  notIn: [DateTime!]
+  lt: DateTime
+  lte: DateTime
+  gt: DateTime
+  gte: DateTime
+  not: DateTimeFilter
+}
+
+input favorisOrderByInput {
+  id: OrderDirection
+  addedDate: OrderDirection
+}
+
+input favorisUpdateInput {
+  user: UserRelateToOneForUpdateInput
+  car: CarRelateToOneForUpdateInput
+  addedDate: DateTime
+}
+
+input favorisUpdateArgs {
+  where: favorisWhereUniqueInput!
+  data: favorisUpdateInput!
+}
+
+input favorisCreateInput {
+  user: UserRelateToOneForCreateInput
+  car: CarRelateToOneForCreateInput
+  addedDate: DateTime
+}
+
+type comment {
+  id: ID!
+  content: String
+  creationDate: DateTime
+  user: User
+  car: Car
+}
+
+input commentWhereUniqueInput {
+  id: ID
+}
+
+input commentWhereInput {
+  AND: [commentWhereInput!]
+  OR: [commentWhereInput!]
+  NOT: [commentWhereInput!]
+  id: IDFilter
+  content: StringFilter
+  creationDate: DateTimeFilter
+  user: UserWhereInput
+  car: CarWhereInput
+}
+
+input commentOrderByInput {
+  id: OrderDirection
+  content: OrderDirection
+  creationDate: OrderDirection
+}
+
+input commentUpdateInput {
+  content: String
+  creationDate: DateTime
+  user: UserRelateToOneForUpdateInput
+  car: CarRelateToOneForUpdateInput
+}
+
+input commentUpdateArgs {
+  where: commentWhereUniqueInput!
+  data: commentUpdateInput!
+}
+
+input commentCreateInput {
+  content: String
+  creationDate: DateTime
+  user: UserRelateToOneForCreateInput
+  car: CarRelateToOneForCreateInput
+}
+
+type reviewUsers {
+  id: ID!
+  userId: User
+  agencyId: Agency
+  rating: Int
+  title: String
+  content: String
+  reviewDate: DateTime
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+input reviewUsersWhereUniqueInput {
+  id: ID
+}
+
+input reviewUsersWhereInput {
+  AND: [reviewUsersWhereInput!]
+  OR: [reviewUsersWhereInput!]
+  NOT: [reviewUsersWhereInput!]
+  id: IDFilter
+  userId: UserWhereInput
+  agencyId: AgencyWhereInput
+  rating: IntFilter
+  title: StringFilter
+  content: StringFilter
+  reviewDate: DateTimeNullableFilter
+  createdAt: DateTimeNullableFilter
+  updatedAt: DateTimeNullableFilter
+}
+
+input reviewUsersOrderByInput {
+  id: OrderDirection
+  rating: OrderDirection
+  title: OrderDirection
+  content: OrderDirection
+  reviewDate: OrderDirection
+  createdAt: OrderDirection
+  updatedAt: OrderDirection
+}
+
+input reviewUsersUpdateInput {
+  userId: UserRelateToOneForUpdateInput
+  agencyId: AgencyRelateToOneForUpdateInput
+  rating: Int
+  title: String
+  content: String
+  reviewDate: DateTime
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+input reviewUsersUpdateArgs {
+  where: reviewUsersWhereUniqueInput!
+  data: reviewUsersUpdateInput!
+}
+
+input reviewUsersCreateInput {
+  userId: UserRelateToOneForCreateInput
+  agencyId: AgencyRelateToOneForCreateInput
+  rating: Int
+  title: String
+  content: String
+  reviewDate: DateTime
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
 """
 The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 """
@@ -1420,12 +1701,6 @@ type Mutation {
   updateResponsiveConfigs(data: [responsiveConfigUpdateArgs!]!): [responsiveConfig]
   deleteresponsiveConfig(where: responsiveConfigWhereUniqueInput!): responsiveConfig
   deleteResponsiveConfigs(where: [responsiveConfigWhereUniqueInput!]!): [responsiveConfig]
-  createreviewsAndRating(data: reviewsAndRatingCreateInput!): reviewsAndRating
-  createReviewsAndRatings(data: [reviewsAndRatingCreateInput!]!): [reviewsAndRating]
-  updatereviewsAndRating(where: reviewsAndRatingWhereUniqueInput!, data: reviewsAndRatingUpdateInput!): reviewsAndRating
-  updateReviewsAndRatings(data: [reviewsAndRatingUpdateArgs!]!): [reviewsAndRating]
-  deletereviewsAndRating(where: reviewsAndRatingWhereUniqueInput!): reviewsAndRating
-  deleteReviewsAndRatings(where: [reviewsAndRatingWhereUniqueInput!]!): [reviewsAndRating]
   createmediaUpload(data: mediaUploadCreateInput!): mediaUpload
   createMediaUploads(data: [mediaUploadCreateInput!]!): [mediaUpload]
   updatemediaUpload(where: mediaUploadWhereUniqueInput!, data: mediaUploadUpdateInput!): mediaUpload
@@ -1456,6 +1731,30 @@ type Mutation {
   updateCarListings(data: [carListingUpdateArgs!]!): [carListing]
   deletecarListing(where: carListingWhereUniqueInput!): carListing
   deleteCarListings(where: [carListingWhereUniqueInput!]!): [carListing]
+  createrating(data: ratingCreateInput!): rating
+  createRatings(data: [ratingCreateInput!]!): [rating]
+  updaterating(where: ratingWhereUniqueInput!, data: ratingUpdateInput!): rating
+  updateRatings(data: [ratingUpdateArgs!]!): [rating]
+  deleterating(where: ratingWhereUniqueInput!): rating
+  deleteRatings(where: [ratingWhereUniqueInput!]!): [rating]
+  createfavoris(data: favorisCreateInput!): favoris
+  createFavorises(data: [favorisCreateInput!]!): [favoris]
+  updatefavoris(where: favorisWhereUniqueInput!, data: favorisUpdateInput!): favoris
+  updateFavorises(data: [favorisUpdateArgs!]!): [favoris]
+  deletefavoris(where: favorisWhereUniqueInput!): favoris
+  deleteFavorises(where: [favorisWhereUniqueInput!]!): [favoris]
+  createcomment(data: commentCreateInput!): comment
+  createComments(data: [commentCreateInput!]!): [comment]
+  updatecomment(where: commentWhereUniqueInput!, data: commentUpdateInput!): comment
+  updateComments(data: [commentUpdateArgs!]!): [comment]
+  deletecomment(where: commentWhereUniqueInput!): comment
+  deleteComments(where: [commentWhereUniqueInput!]!): [comment]
+  createreviewUsers(data: reviewUsersCreateInput!): reviewUsers
+  createReviewUsers(data: [reviewUsersCreateInput!]!): [reviewUsers]
+  updatereviewUsers(where: reviewUsersWhereUniqueInput!, data: reviewUsersUpdateInput!): reviewUsers
+  updateReviewUsers(data: [reviewUsersUpdateArgs!]!): [reviewUsers]
+  deletereviewUsers(where: reviewUsersWhereUniqueInput!): reviewUsers
+  deleteReviewUsers(where: [reviewUsersWhereUniqueInput!]!): [reviewUsers]
   endSession: Boolean!
   authenticateUserWithPassword(email: String!, password: String!): UserAuthenticationWithPasswordResult
   createInitialUser(data: CreateInitialUserInput!): UserAuthenticationWithPasswordSuccess!
@@ -1497,9 +1796,6 @@ type Query {
   responsiveConfig(where: responsiveConfigWhereUniqueInput!): responsiveConfig
   responsiveConfigs(where: responsiveConfigWhereInput! = {}, orderBy: [responsiveConfigOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: responsiveConfigWhereUniqueInput): [responsiveConfig!]
   responsiveConfigsCount(where: responsiveConfigWhereInput! = {}): Int
-  reviewsAndRating(where: reviewsAndRatingWhereUniqueInput!): reviewsAndRating
-  reviewsAndRatings(where: reviewsAndRatingWhereInput! = {}, orderBy: [reviewsAndRatingOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: reviewsAndRatingWhereUniqueInput): [reviewsAndRating!]
-  reviewsAndRatingsCount(where: reviewsAndRatingWhereInput! = {}): Int
   mediaUpload(where: mediaUploadWhereUniqueInput!): mediaUpload
   mediaUploads(where: mediaUploadWhereInput! = {}, orderBy: [mediaUploadOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: mediaUploadWhereUniqueInput): [mediaUpload!]
   mediaUploadsCount(where: mediaUploadWhereInput! = {}): Int
@@ -1515,6 +1811,17 @@ type Query {
   carListing(where: carListingWhereUniqueInput!): carListing
   carListings(where: carListingWhereInput! = {}, orderBy: [carListingOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: carListingWhereUniqueInput): [carListing!]
   carListingsCount(where: carListingWhereInput! = {}): Int
+  rating(where: ratingWhereUniqueInput!): rating
+  ratings(where: ratingWhereInput! = {}, orderBy: [ratingOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ratingWhereUniqueInput): [rating!]
+  ratingsCount(where: ratingWhereInput! = {}): Int
+  favoris(where: favorisWhereUniqueInput!): favoris
+  favorises(where: favorisWhereInput! = {}, orderBy: [favorisOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: favorisWhereUniqueInput): [favoris!]
+  favorisesCount(where: favorisWhereInput! = {}): Int
+  comment(where: commentWhereUniqueInput!): comment
+  comments(where: commentWhereInput! = {}, orderBy: [commentOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: commentWhereUniqueInput): [comment!]
+  commentsCount(where: commentWhereInput! = {}): Int
+  reviewUsers(where: reviewUsersWhereInput! = {}, orderBy: [reviewUsersOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: reviewUsersWhereUniqueInput): [reviewUsers!]
+  reviewUsersCount(where: reviewUsersWhereInput! = {}): Int
   keystone: KeystoneMeta!
   authenticatedItem: AuthenticatedItem
 }

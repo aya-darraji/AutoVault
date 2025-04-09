@@ -1,6 +1,6 @@
-import { list } from '@keystone-6/core';
-import { allowAll } from '@keystone-6/core/access';
-import { text, integer, relationship, select, checkbox, float, timestamp, image } from '@keystone-6/core/fields';
+  import { list } from '@keystone-6/core';
+  import { allowAll } from '@keystone-6/core/access';
+  import { text, integer, relationship, select, checkbox, float, timestamp, image } from '@keystone-6/core/fields';
 import QRCode from 'qrcode';
 
 
@@ -210,8 +210,20 @@ export const Cars = list({
       }
     }),
 
+    
+    //rating: relationship({ ref: "rating", many: false, ui: { displayMode: "select", labelField: "name" } })
+    //ratings: relationship({ ref: "Rating.cars", many: true }),
+    rating: relationship({
+      ref: 'rating',
+      many: true,
+    }),
+    
+    favoris: relationship({ ref: 'favoris', many: true }),
 
-
+    comment: relationship({
+      ref: "comment",
+      many: true, // Un utilisateur peut avoir plusieurs commentaires
+    }),
     
     
     status: select({
@@ -222,6 +234,13 @@ export const Cars = list({
       ],
       defaultValue: 'available',
     }),
+
+    transaction: relationship({
+      ref: 'transaction',
+      many: true
+    }),
+
+
     listedDate: timestamp({ defaultValue: { kind: 'now' } }),
     warrantyYears: integer(),
 

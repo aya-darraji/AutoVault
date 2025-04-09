@@ -11,12 +11,17 @@ import { type ListConfig } from '@keystone-6/core'
 import { Settings } from './models/settings';  // Mise à jour du fichier*/
 import { ResponsiveConfig } from './models/responsiveConfig';  
 import { ContactInquiry } from './models/contactInquiry';  
-import { ReviewsAndRatings } from './models/reviewsAndRatings';  
+//import { ReviewsAndRatings } from './models/reviewsAndRatings';  
 import { Media } from './models/media'; 
 import { CarSpecifications } from './models/carSpecification'; 
 import { CarListings  } from './models/carListings'; 
 
 import { CarSearchFilter  } from './models/carSearchFilter'; 
+import { Rating } from './models/rating';
+import { Favoris } from './models/favoris'; // Import
+import { Comment } from './models/comment'; // Import
+import { ReviewUsers } from './models/reviewUsers'; // Import du nouveau modèle
+import { Transaction } from './models/transaction' // Ajout de l'import pour Transaction
 
 export const lists = {
 
@@ -26,12 +31,17 @@ export const lists = {
   Invoice:Invoices,
   setting:Settings,
   responsiveConfig:ResponsiveConfig,
-  reviewsAndRating:ReviewsAndRatings,
+  //reviewsAndRating:ReviewsAndRatings,
   mediaUpload:Media,
   carSpecification:CarSpecifications,
   contactInquiry:ContactInquiry,
   carSearchFilter:CarSearchFilter,
-  carListing :CarListings
+  carListing :CarListings,
+  rating: Rating,
+  favoris: Favoris,
+  comment:Comment,
+  reviewUsers: ReviewUsers, // Ajout du nouveau modèle
+  transaction: Transaction // Ajout du modèle Transaction
 
 
 } satisfies Lists
